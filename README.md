@@ -1,2 +1,1 @@
-# cpdn-ws
-CPDN web services
+# CPDN REST API
