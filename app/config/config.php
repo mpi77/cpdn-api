@@ -1,24 +1,55 @@
 <?php
-
-return new \Phalcon\Config(array(
-	'database' => array(
-		'adapter'  => 'Mysql',
-		'host'     => 'localhost',
-		'username' => 'root',
-		'password' => '',
-		'name'     => 'test',
-	),
-	'application' => array(
-		'controllersDir' => __DIR__ . '/../../app/controllers/',
-		'modelsDir'      => __DIR__ . '/../../app/models/',
-		'viewsDir'       => __DIR__ . '/../../app/views/',
-		'pluginsDir'     => __DIR__ . '/../../app/plugins/',
-		'libraryDir'     => __DIR__ . '/../../app/library/',
-		'baseUri'        => '/cpdn-api/',
-	),
-	'models' => array(
-		'metadata' => array(
-			'adapter' => 'Memory'
-		)
-	)
-));
+//define("APP_DIR", "/home/martin/public_html/phalcon/cpdn-api/app");
+return new \Phalcon\Config ( array (
+		'database' => array (
+				"network" => array(
+						'adapter' => 'Mysql',
+						'host' => 'localhost',
+						'username' => 'cpdn',
+						'password' => 'cpdn',
+						'dbname' => 'cpdn-network',
+						'charset'  => 'utf8'),
+				"background" => array(
+						'adapter' => 'Mysql',
+						'host' => 'localhost',
+						'username' => 'cpdn',
+						'password' => 'cpdn',
+						'dbname' => 'cpdn-background',
+						'charset'  => 'utf8'),
+				"idp" => array(
+						'adapter' => 'Mysql',
+						'host' => 'localhost',
+						'username' => 'cpdn',
+						'password' => 'cpdn',
+						'dbname' => 'cpdn-idp',
+						'charset'  => 'utf8'),
+		),
+		'application' => array (
+				'controllersDir' => APP_DIR . '/controllers/',
+				'modelsDir' => APP_DIR . '/models/',
+				'viewsDir' => APP_DIR . '/views/',
+				'libraryDir' => APP_DIR . '/library/',
+				'pluginsDir' => APP_DIR . '/plugins/',
+				'transactionsDir' => APP_DIR . '/transactions/',
+				'cacheDir' => APP_DIR . '/cache/',
+				'baseUri' => '/',
+				'publicUrl' => 'localhost:488',
+				'cryptSalt' => 'IEW+71alkDfR|_&G&f,eEsjd+vU]:k@32:jASJDWE@#a8asd4;pfdskW*JJFeasda7nkAFr!!A&23' 
+		),
+		'mail' => array(
+				'fromName' => 'CPDN API',
+				'fromEmail' => 'noreply@cpdn',
+				'smtp' => array(
+						'server' => 'smtp...',
+						'port' => 587,
+						'security' => 'tls',
+						'username' => 'noreply@...',
+						'password' => 'pass...'
+				)
+		),
+		'models' => array (
+				'metadata' => array (
+						'adapter' => 'Memory' 
+				) 
+		) 
+) );
