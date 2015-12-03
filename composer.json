@@ -1,0 +1,14 @@
+{
+  "name" : "cpdn/api",
+  "description" : "RESTful API service",
+  "version" : "0.0.1",
+  "require" : {
+    "php" : ">=5.3.9",
+    "ext-phalcon" : ">=1.2.4",
+    "swiftmailer/swiftmailer" : "5.0.*"
+  },
+  "authors" : [ {
+    "name" : "Martin Bures",
+    "email" : "m2bures@gmail.com"
+  } ]
+}
