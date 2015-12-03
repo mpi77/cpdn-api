@@ -27,7 +27,6 @@ return new \Phalcon\Config ( array (
 		'application' => array (
 				'controllersDir' => APP_DIR . '/controllers/',
 				'modelsDir' => APP_DIR . '/models/',
-				'viewsDir' => APP_DIR . '/views/',
 				'libraryDir' => APP_DIR . '/library/',
 				'pluginsDir' => APP_DIR . '/plugins/',
 				'transactionsDir' => APP_DIR . '/transactions/',
