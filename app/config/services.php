@@ -49,6 +49,26 @@ $di->set ( 'db-network', function () use($config) {
 	) );
 } );
 
+$di->set ( 'db-background', function () use($config) {
+	return new DbAdapter ( array (
+			'host' => $config->database->background->host,
+			'username' => $config->database->background->username,
+			'password' => $config->database->background->password,
+			'dbname' => $config->database->background->name,
+			'charset' => $config->database->background->charset 
+	) );
+} );
+
+$di->set ( 'db-idp', function () use($config) {
+	return new DbAdapter ( array (
+			'host' => $config->database->idp->host,
+			'username' => $config->database->idp->username,
+			'password' => $config->database->idp->password,
+			'dbname' => $config->database->idp->name,
+			'charset' => $config->database->idp->charset 
+	) );
+} );
+
 $di->set ( 'modelsMetadata', function () use($config) {
 	return new MetaDataAdapter ( array (
 			'metaDataDir' => $config->application->cacheDir . 'metaData/' 
