@@ -11,7 +11,9 @@ class IndexController extends ControllerBase {
 	public function indexAction() {
 		$response = new Response ();
 		$response->setStatusCode ( 403, "Forbidden" );
-		$response->setJsonContent(array("msg" => "This is a private API which requires an authorized access."));
+		$response->setJsonContent ( array (
+				"msg" => "This is a private API which requires an authorized access." 
+		) );
 		return $response;
 	}
 }
