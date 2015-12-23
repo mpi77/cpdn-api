@@ -39,7 +39,7 @@ $di->set ( 'view', function () {
 	return $view;
 }, true );
 
-$di->set ( 'db-network', function () use($config) {
+$di->set ( 'networkDb', function () use($config) {
 	return new DbAdapter ( array (
 			'host' => $config->database->network->host,
 			'username' => $config->database->network->username,
@@ -49,7 +49,7 @@ $di->set ( 'db-network', function () use($config) {
 	) );
 } );
 
-$di->set ( 'db-background', function () use($config) {
+$di->set ( 'backgroundDb', function () use($config) {
 	return new DbAdapter ( array (
 			'host' => $config->database->background->host,
 			'username' => $config->database->background->username,
@@ -59,7 +59,7 @@ $di->set ( 'db-background', function () use($config) {
 	) );
 } );
 
-$di->set ( 'db-idp', function () use($config) {
+$di->set ( 'idpDp', function () use($config) {
 	return new DbAdapter ( array (
 			'host' => $config->database->idp->host,
 			'username' => $config->database->idp->username,

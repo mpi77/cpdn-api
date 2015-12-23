@@ -7,22 +7,22 @@ return new \Phalcon\Config ( array (
 						'host' => 'localhost',
 						'username' => 'cpdn',
 						'password' => 'cpdn',
-						'dbname' => 'cpdn-network',
+						'name' => 'cpdn-network',
 						'charset'  => 'utf8'),
 				"background" => array(
 						'adapter' => 'Mysql',
 						'host' => 'localhost',
 						'username' => 'cpdn',
 						'password' => 'cpdn',
-						'dbname' => 'cpdn-background',
+						'name' => 'cpdn-background',
 						'charset'  => 'utf8'),
 				"idp" => array(
 						'adapter' => 'Mysql',
 						'host' => 'localhost',
 						'username' => 'cpdn',
 						'password' => 'cpdn',
-						'dbname' => 'cpdn-idp',
-						'charset'  => 'utf8'),
+						'name' => 'cpdn-idp',
+						'charset'  => 'utf8')
 		),
 		'application' => array (
 				'controllersDir' => APP_DIR . '/controllers/',
