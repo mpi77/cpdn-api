@@ -5,7 +5,7 @@ namespace CpdnAPI\Controllers;
 use Phalcon\Http\Response;
 use CpdnAPI\Models\Network\Scheme;
 
-class SchemeController extends ControllerBase {
+class SchemesController extends ControllerBase {
 	public function initialize() {
 		$this->view->disable ();
 	}
