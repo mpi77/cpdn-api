@@ -3,17 +3,14 @@ use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\View;
 use Phalcon\Crypt;
 use Phalcon\Mvc\Dispatcher;
-use Phalcon\Http\Response\Cookies;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
-use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Files as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
-use Phalcon\Flash\Direct as FlashDirect;
-use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Events\Manager as EventsManager;
 use CpdnAPI\Plugins\NotFoundPlugin;
 use CpdnAPI\Mail\Mail;
+use CpdnAPI\Auth\Auth;
 
 $di = new FactoryDefault ();
 
@@ -96,3 +93,8 @@ $di->set ( 'router', function () {
 $di->set ( 'mail', function () {
 	return new Mail ();
 } );
+
+$di->set ( 'auth', function () {
+	return new Auth ();
+} );
+	
