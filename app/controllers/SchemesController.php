@@ -10,18 +10,36 @@ class SchemesController extends ControllerBase {
 		$this->view->disable ();
 	}
 	
-	public function helloAction() {
-		$response = new Response ();
-		$response->setStatusCode ( 200, "OK" );
-
-		$schemes = Scheme::find ();
-
-		$r = array();
-		foreach ($schemes as $s) {
-			$r[] = array($s->id, $s->name);
-		}
-
-		$response->setJsonContent ( $r );
-		return $response;
+	public function readCollectionAction(){
+	}
+	
+	public function createItemAction(){
+	}
+	
+	public function readItemAction(){
+	}
+	
+	public function updateItemAction(){
+	}
+	
+	public function deleteItemAction(){
+	}
+	
+	public function readNodesCollectionAction(){
+	}
+	
+	public function readSectionsCollectionAction(){
+	}
+	
+	public function readMapPointsCollectionAction(){
+	}
+	
+	public function readObjectsCollectionAction(){
+	}
+	
+	public function readPermissionsCollectionAction(){
+	}
+	
+	public function readTasksCollectionAction(){
 	}
 }
