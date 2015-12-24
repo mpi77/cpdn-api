@@ -31,6 +31,7 @@ return new \Phalcon\Config ( array (
 				'pluginsDir' => APP_DIR . '/plugins/',
 				'transactionsDir' => APP_DIR . '/transactions/',
 				'cacheDir' => APP_DIR . '/cache/',
+				'routesDir' => APP_DIR . '/routes/',
 				'baseUri' => '/',
 				'publicUrl' => 'localhost:488',
 				'cryptSalt' => 'IEW+71alkDfR|_&G&f,eEsjd+vU]:k@32:jASJDWE@#a8asd4;pfdskW*JJFeasda7nkAFr!!A&23' 
