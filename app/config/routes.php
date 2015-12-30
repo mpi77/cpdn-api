@@ -1,10 +1,9 @@
 <?php
-
 use Phalcon\Mvc\Router;
 use CpdnAPI\Routes\SchemeRoutes;
 
-$router = new Router ( false );
-$router->removeExtraSlashes(true);
+$router = new Router ();
+// $router->removeExtraSlashes(true);
 $router->setDefaultController ( 'index' );
 $router->setDefaultAction ( 'index' );
 
@@ -15,6 +14,6 @@ $router->add ( '/', array (
 ) );
 
 /* private area */
-$router->mount(new SchemeRoutes());
+$router->mount ( new SchemeRoutes () );
 
 return $router;

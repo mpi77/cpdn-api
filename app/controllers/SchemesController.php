@@ -2,19 +2,18 @@
 
 namespace CpdnAPI\Controllers;
 
-use Phalcon\Http\Response;
 use CpdnAPI\Models\Network\Scheme;
 use CpdnAPI\Utils\Common;
 
 class SchemesController extends ControllerBase {
 	public function initialize() {
 		$this->view->disable ();
+		$this->response->setContentType('application/json', 'UTF-8');
 	}
 	public function readCollectionAction() {
 		switch ($this->dispatcher->getParam ( "version" )) {
 			case Common::API_VERSION_V1 :
-				$response = new Response ();
-				$response->setStatusCode ( 200, "OK" );
+				$this->response->setStatusCode ( 200, "OK" );
 				$schemes = Scheme::find ();
 				$r = array ();
 				
@@ -24,9 +23,9 @@ class SchemesController extends ControllerBase {
 							$s->name 
 					);
 				}
-				$response->setJsonContent ( $r );
+				$this->response->setJsonContent ( $r );
 				
-				return $response;
+				return $this->response;
 				break;
 		}
 	}
