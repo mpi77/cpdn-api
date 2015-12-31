@@ -5,6 +5,8 @@ namespace CpdnAPI\Controllers;
 use CpdnAPI\Models\Network\Scheme;
 use CpdnAPI\Utils\Common;
 use CpdnAPI\Utils\CollectionGenerator as CG;
+use CpdnAPI\Utils\Searchable;
+use CpdnAPI\Utils\Sortable;
 use Phalcon\Mvc\Model\Criteria;
 
 class SchemesController extends ControllerBase {
@@ -27,34 +29,10 @@ class SchemesController extends ControllerBase {
 			case Common::API_VERSION_V1 :
 				$this->response->setStatusCode ( 200, "OK" );
 				
-				// searchable feature
-				$q = $this->request->get ( "q" );
-				if (is_string ( $q ) && mb_strlen ( $q ) > 0) {
-					
-					$q = mb_strcut ( $q, 1, mb_strlen ( $q ) - 2 );
-					$q_fields = explode ( ";", $q );
-					
-					$filter = array ();
-					foreach ( $q_fields as $q_field ) {
-						$qq = explode ( "=", $q_field );
-						$key = $qq [0];
-						$value = $qq [1];
-						
-						if (array_key_exists ( $key, $this->validFields ) && is_string ( $value ) && strlen ( $value ) > 0) {
-							$filter [$key] = $value;
-						}
-					}
-				}
+				$query = Criteria::fromInput ( $this->di, 'CpdnAPI\Models\Network\Scheme', Searchable::buildCriteriaFromInputParams($this->request->get ( "q" ),$this->validFields) );
 				
-				$query = Criteria::fromInput ( $this->di, 'CpdnAPI\Models\Network\Scheme', $filter );
-				
-				// sortable feature
-				$s = $this->request->get ( "s" );
-				if (is_string ( $s ) && mb_strlen ( $s ) > 0) {
-					$s = mb_strcut ( $s, 1, mb_strlen ( $s ) - 2 );
-					if (array_key_exists ( $s, $this->validFields )) {
-						$query->orderBy ( $s );
-					}
+				if ($s = Sortable::buildCriteriaOrderByParams($this->request->get ( "s" ),$this->validFields)) {
+					$query->orderBy ( $s );
 				}
 				
 				$schemes = Scheme::find ( $query->getParams () );

@@ -127,4 +127,13 @@ class NodeSpec extends Model {
 	 *
 	 */
 	public $ts_update;
+	
+	/**
+	 * Initializer method for model.
+	 */
+	public function initialize() {
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Node", "node_spec_id", array (
+				'alias' => 'nnode' 
+		) );
+	}
 }

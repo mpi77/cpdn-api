@@ -57,4 +57,23 @@ class Section extends Model {
 	 *
 	 */
 	public $ts_update;
+	
+	/**
+	 * Initializer method for model.
+	 */
+	public function initialize() {
+		
+		$this->belongsTo ( "scheme_id", "CpdnAPI\Models\Network\Scheme", "id", array (
+				'alias' => 'scheme'
+		) );
+		$this->belongsTo ( "section_spec_id", "CpdnAPI\Models\Network\SectionSpec", "id", array (
+				'alias' => 'spec'
+		) );
+		$this->belongsTo ( "section_calc_id", "CpdnAPI\Models\Network\SectionCalc", "id", array (
+				'alias' => 'calc'
+		) );
+		$this->belongsTo ( "section_node_id", "CpdnAPI\Models\Network\SectionNode", "id", array (
+				'alias' => 'node'
+		) );
+	}
 }

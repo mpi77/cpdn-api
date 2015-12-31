@@ -50,4 +50,23 @@ class SectionNode extends Model {
 	 *
 	 */
 	public $ts_update;
+	
+	/**
+	 * Initializer method for model.
+	 */
+	public function initialize() {
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Section", "section_node_id", array (
+				'alias' => 'nsection'
+		) );
+		
+		$this->belongsTo ( "node_src", "CpdnAPI\Models\Network\Node", "id", array (
+				'alias' => 'nodesrc'
+		) );
+		$this->belongsTo ( "node_dst", "CpdnAPI\Models\Network\Node", "id", array (
+				'alias' => 'nodedst'
+		) );
+		$this->belongsTo ( "node_trc", "CpdnAPI\Models\Network\Node", "id", array (
+				'alias' => 'nodetrc'
+		) );
+	}
 }

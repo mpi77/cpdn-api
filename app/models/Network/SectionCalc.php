@@ -113,4 +113,13 @@ class SectionCalc extends Model {
 	 *
 	 */
 	public $ts_update;
+	
+	/**
+	 * Initializer method for model.
+	 */
+	public function initialize() {
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Section", "section_calc_id", array (
+				'alias' => 'nsection'
+		) );
+	}
 }

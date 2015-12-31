@@ -43,4 +43,16 @@ class Object extends Model {
 	 *
 	 */
 	public $ts_update;
+	
+	/**
+	 * Initializer method for model.
+	 */
+	public function initialize() {
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\ObjectMember", "object_id", array (
+				'alias' => 'nobjectmembers' 
+		) );
+		$this->belongsTo ( "scheme_id", "CpdnAPI\Models\Network\Scheme", "id", array (
+				'alias' => 'scheme' 
+		) );
+	}
 }
