@@ -11,13 +11,13 @@ use Phalcon\Mvc\Model\Criteria;
 
 class SchemesController extends ControllerBase {
 	private $validFields = array (
-			"id" => "",
-			"tsCreate" => "",
-			"tsUpdate" => "",
-			"description" => "",
-			"lock" => "",
-			"name" => "",
-			"version" => "" 
+			"id" => "/^[1-9][0-9]{0,9}$/",
+			"tsCreate" => Common::PATTERN_ISO_8601,
+			"tsUpdate" => Common::PATTERN_ISO_8601,
+			"description" => "/^[a-zA-Z0-9_\/\.\-]{0,45}$/",
+			"lock" => Common::PATTERN_BOOLEAN,
+			"name" => "/^[a-zA-Z0-9_\/\.\-]{1,45}$/",
+			"version" => "/^[1-9][0-9]{0,9}$/" 
 	);
 	public function initialize() {
 		$this->view->disable ();
