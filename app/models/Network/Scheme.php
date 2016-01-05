@@ -49,12 +49,24 @@ class Scheme extends Model {
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'name' => 'name',
+				'description' => 'description',
+				'version' => 'version',
+				'lock' => 'lock',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate' 
+		);
+	}
 }
