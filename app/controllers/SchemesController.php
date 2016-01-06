@@ -8,7 +8,8 @@ use CpdnAPI\Utils\CollectionGenerator as CG;
 use CpdnAPI\Utils\MetaGenerator as MG;
 use CpdnAPI\Utils\Searchable;
 use CpdnAPI\Utils\Sortable;
-use CpdnAPI\Utils\Paginator as PAG;
+use CpdnAPI\Utils\Expandable;
+use CpdnAPI\Utils\Paginator;
 use Phalcon\Paginator\Adapter\QueryBuilder as PQB;
 
 class SchemesController extends ControllerBase {
@@ -17,7 +18,7 @@ class SchemesController extends ControllerBase {
 			"tsCreate" => Common::PATTERN_ISO_8601,
 			"tsUpdate" => Common::PATTERN_ISO_8601,
 			"description" => "/^[a-zA-Z0-9_\/\.\-]{0,45}$/",
-			"lock" => Common::PATTERN_BOOLEAN,
+			"lock" => "/^(0|1)$/",
 			"name" => "/^[a-zA-Z0-9_\/\.\-]{1,45}$/",
 			"version" => "/^[1-9][0-9]{0,9}$/" 
 	);
@@ -27,13 +28,11 @@ class SchemesController extends ControllerBase {
 		$this->response->setStatusCode ( 404, "Not Found" );
 	}
 	public function readCollectionAction() {
-		$page_size = (int) $this->request->get ( "pageSize", "int", PAG::DEFAULT_PAGE_SIZE );
-		$page_number = (int) $this->request->get ( "pageNumber", "int", PAG::DEFAULT_PAGE );
+		$page_size = ( int ) $this->request->get ( "pageSize", "int", Paginator::DEFAULT_PAGE_SIZE );
+		$page_number = ( int ) $this->request->get ( "pageNumber", "int", Paginator::DEFAULT_PAGE );
 		
 		switch ($this->dispatcher->getParam ( "version" )) {
 			case Common::API_VERSION_V1 :
-				$this->response->setStatusCode ( 200, "OK" );
-				
 				// create builder
 				$builder = $this->modelsManager->createBuilder ()->columns ( array_keys ( $this->validFields ) )->from ( 'CpdnAPI\Models\Network\Scheme' );
 				
@@ -57,10 +56,33 @@ class SchemesController extends ControllerBase {
 				
 				// expand & select result set
 				$items = array ();
+				$expandable = Expandable::buildExpandableFields ( $this->request->get ( "e" ), array (
+						"scheme" 
+				) );
 				foreach ( $page->items as $item ) {
-					$items [] = MG::generate(sprintf("/schemes/%s", $item->id), array(MG::KEY_ID => $item->id));
+					if (in_array ( "scheme", $expandable )) {
+						// expanded scheme
+						$items [] = array (
+								MG::KEY_META => MG::generate ( sprintf ( "/schemes/%s", $item->id ), array (
+										MG::KEY_ID => $item->id,
+										"tsCreate" => $item->tsCreate,
+										"tsUpdate" => $item->tsUpdate 
+								) ),
+								"name" => $item->name,
+								"description" => $item->description,
+								"lock" => $item->lock,
+								"version" => $item->version 
+						);
+					} else {
+						// meta link to the current scheme
+						$items [] = array (
+								MG::KEY_META => MG::generate ( sprintf ( "/schemes/%s", $item->id ), array (
+										MG::KEY_ID => $item->id 
+								) ) 
+						);
+					}
 				}
-				
+				$this->response->setStatusCode ( 200, "OK" );
 				$this->response->setJsonContent ( CG::generate ( $items, $this->request->getURI (), $page->total_items, $page->total_pages, $page->current, $page_size ) );
 				return $this->response;
 				break;
