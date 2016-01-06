@@ -17,9 +17,9 @@ class CollectionGenerator {
 	const KEY_NEXT = "next";
 	const KEY_LAST = "last";
 	
-	public static function generate($items = array(), $pathUri = "", $itemsTotal = 0, $pagesTotal = 0, $pageNumber = 1, $pageSize = 20) {
+	public static function generate($items = array(), $queryUri = "", $itemsTotal = 0, $pagesTotal = 0, $pageNumber = 1, $pageSize = 20) {
 		$r = array();
-		$r[self::KEY_META] = MG::generate($pathUri);
+		$r[self::KEY_META] = MG::generate($queryUri);
 		$r[self::KEY_ITEMS] = $items;
 		$r[self::KEY_PAGE_NUMBER] = $pageNumber;
 		$r[self::KEY_PAGE_SIZE] = $pageSize;
