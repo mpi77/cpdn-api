@@ -52,15 +52,14 @@ class Searchable {
 	 *        	string from "q" param from query part of URL
 	 *        	general example: (filed=value;field2=value2)
 	 * @param array $valid_fields
-	 * 			this array contains ALL fields (= required + optional)
+	 *        	this array contains ALL fields (= required + optional)
 	 *        	format of an array: array(string_field_name => string_value_pattern)
 	 * @param array $required_fields
-	 * 			this array contains ONLY REQUIRED fields (as values in array)
-	 *        	format of an array: array(string_field_name,string_field_name2) 
-	 * @return array|false|null 
-	 * 			array in case of presence some valid fields
-	 *          false in case of missing some required field
-	 *          null in case of empty query string
+	 *        	this array contains ONLY REQUIRED fields (as values in array)
+	 *        	format of an array: array(string_field_name,string_field_name2)
+	 * @return array|false|null array in case of presence some valid fields
+	 *         false in case of missing some required field
+	 *         null in case of empty query string
 	 */
 	public static function buildQueryBuilderWhereParams($q, $valid_fields = array(), $required_fields = array()) {
 		if (is_string ( $q ) && mb_strlen ( $q ) > 0) {
@@ -89,22 +88,31 @@ class Searchable {
 					$r ["conditions"] = empty ( $r ["conditions"] ) ? sprintf ( " %s = :%s: ", $field, $field ) : sprintf ( "%s AND %s = :%s: ", $r ["conditions"], $field, $field );
 					$r ["bindParams"] [$field] = $value;
 					
-					// if field is reguired set them to TRUE
-					if (in_array ( $field, $required_fields )) {
+					// if field is reguired set this to TRUE to notify its presence
+					if (array_key_exists( $field, $rq )) {
 						$rq [$field] = true;
 					}
 				}
 			}
 			if (empty ( $r ["conditions"] ) && empty ( $r ["bindParams"] )) {
-				return null;
-			} else {
-				if(in_array(false, $rq)){
+				if (in_array ( false, $rq )) {
 					return false;
-				} else{
+				} else {
+					return null;
+				}
+			} else {
+				if (in_array ( false, $rq )) {
+					return false;
+				} else {
 					return $r;
 				}
 			}
+		} else {
+			if (empty ( $required_fields )) {
+				return null;
+			} else {
+				return false;
+			}
 		}
-		return null;
 	}
 }
