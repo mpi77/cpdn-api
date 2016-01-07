@@ -42,7 +42,7 @@ class SchemesController extends ControllerBase {
 				}
 				
 				// append ORDER BY string
-				if (($order = Sortable::buildQueryBuilderOrderByParams ( $this->request->get ( Sortable::URL_QUERY_PARAM ), $this->validFields )) !== false) {
+				if (($order = Sortable::buildQueryBuilderOrderByParams ( $this->request->get ( Sortable::URL_QUERY_PARAM ), array_keys($this->validFields) )) !== false) {
 					$builder->orderBy ( $order );
 				}
 				
@@ -82,13 +82,18 @@ class SchemesController extends ControllerBase {
 						);
 					}
 				}
-				$this->response->setStatusCode ( 200, "OK" );
-				$this->response->setJsonContent ( CG::generate ( $items, $this->request->getURI (), $page->total_items, $page->total_pages, $page->current, $page_size, array (
-						"first" => Paginator::DEFAULT_PAGE,
-						"previous" => $page->before,
-						"next" => $page->next,
-						"last" => $page->last 
-				) ) );
+				
+				if (! empty ( $items )) {
+					$this->response->setStatusCode ( 200, "OK" );
+					$this->response->setJsonContent ( CG::generate ( $items, $this->request->getURI (), $page->total_items, $page->total_pages, $page->current, $page_size, array (
+							"first" => Paginator::DEFAULT_PAGE,
+							"previous" => $page->before,
+							"next" => $page->next,
+							"last" => $page->last 
+					) ) );
+				} else{
+					$this->response->setStatusCode ( 204, "No Content" );
+				}
 				return $this->response;
 				break;
 		}

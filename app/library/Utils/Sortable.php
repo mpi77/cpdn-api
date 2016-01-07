@@ -21,7 +21,8 @@ class Sortable {
 	 * @param string $s
 	 *        	string from "s" param from query part of URL
 	 *        	general example: (filed)
-	 * @param array $valid_fields        	
+	 * @param array $valid_fields
+	 * 			each value is a field name        	
 	 * @return string|false
 	 */
 	public static function buildCriteriaOrderByParams($s, $valid_fields = array()) {
@@ -29,7 +30,7 @@ class Sortable {
 			// remove opening and closing brackets
 			$s = mb_strcut ( $s, 1, mb_strlen ( $s ) - 2 );
 			
-			if (array_key_exists ( $s, $valid_fields )) {
+			if (in_array ( $s, $valid_fields )) {
 				return $s;
 			}
 		}
@@ -42,7 +43,8 @@ class Sortable {
 	 * @param string $s
 	 *        	string from "s" param from query part of URL
 	 *        	general example: (filed1,field2:asc,field3:desc)
-	 * @param array $valid_fields        	
+	 * @param array $valid_fields
+	 * 			each value is a field name        	
 	 * @return string|false
 	 */
 	public static function buildQueryBuilderOrderByParams($s, $valid_fields = array()) {
@@ -59,11 +61,11 @@ class Sortable {
 					$field = $ss [0];
 					$direction = $ss [1];
 					
-					if (array_key_exists ( $field, $valid_fields ) && ($direction == self::SORT_ASC || $direction == self::SORT_DESC)) {
+					if (in_array ( $field, $valid_fields ) && ($direction == self::SORT_ASC || $direction == self::SORT_DESC)) {
 						$r [] = sprintf ( "%s %s", $field, $direction );
 					}
 				} else {
-					if (array_key_exists ( $s_field, $valid_fields )) {
+					if (in_array ( $s_field, $valid_fields )) {
 						$r [] = sprintf ( "%s %s", $s_field, self::SORT_ASC );
 					}
 				}
