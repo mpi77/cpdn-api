@@ -37,8 +37,13 @@ class SchemesController extends ControllerBase {
 				$builder = $this->modelsManager->createBuilder ()->columns ( array_keys ( $this->validFields ) )->from ( 'CpdnAPI\Models\Network\Scheme' );
 				
 				// append WHERE conditions
-				if (($where = Searchable::buildQueryBuilderWhereParams ( $this->request->get ( Searchable::URL_QUERY_PARAM ), $this->validFields )) !== false) {
+				$where = Searchable::buildQueryBuilderWhereParams ( $this->request->get ( Searchable::URL_QUERY_PARAM ), $this->validFields, array("id") );
+				if (is_array($where) && !empty($where) && $where !== false && $where !== null) {
 					$builder->where ( $where ["conditions"], $where ["bindParams"] );
+				}
+				if($where === false){
+					$this->response->setStatusCode ( 400, "Bad Request" );
+					return $this->response;
 				}
 				
 				// append ORDER BY string
