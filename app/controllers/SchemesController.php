@@ -83,7 +83,12 @@ class SchemesController extends ControllerBase {
 					}
 				}
 				$this->response->setStatusCode ( 200, "OK" );
-				$this->response->setJsonContent ( CG::generate ( $items, $this->request->getURI (), $page->total_items, $page->total_pages, $page->current, $page_size ) );
+				$this->response->setJsonContent ( CG::generate ( $items, $this->request->getURI (), $page->total_items, $page->total_pages, $page->current, $page_size, array (
+						"first" => Paginator::DEFAULT_PAGE,
+						"previous" => $page->before,
+						"next" => $page->next,
+						"last" => $page->last 
+				) ) );
 				return $this->response;
 				break;
 		}
