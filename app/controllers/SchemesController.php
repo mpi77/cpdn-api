@@ -38,16 +38,16 @@ class SchemesController extends ControllerBase {
 				
 				// append WHERE conditions
 				$where = Searchable::buildQueryBuilderWhereParams ( $this->request->get ( Searchable::URL_QUERY_PARAM ), $this->validFields );
-				if (is_array($where) && !empty($where) && $where !== false && $where !== null) {
+				if (is_array ( $where ) && ! empty ( $where ) && $where !== false && $where !== null) {
 					$builder->where ( $where ["conditions"], $where ["bindParams"] );
 				}
-				if($where === false){
+				if ($where === false) {
 					$this->response->setStatusCode ( 400, "Bad Request" );
 					return $this->response;
 				}
 				
 				// append ORDER BY string
-				if (($order = Sortable::buildQueryBuilderOrderByParams ( $this->request->get ( Sortable::URL_QUERY_PARAM ), array_keys($this->validFields) )) !== false) {
+				if (($order = Sortable::buildQueryBuilderOrderByParams ( $this->request->get ( Sortable::URL_QUERY_PARAM ), array_keys ( $this->validFields ) )) !== false) {
 					$builder->orderBy ( $order );
 				}
 				
@@ -96,7 +96,7 @@ class SchemesController extends ControllerBase {
 							"next" => $page->next,
 							"last" => $page->last 
 					) ) );
-				} else{
+				} else {
 					$this->response->setStatusCode ( 204, "No Content" );
 				}
 				return $this->response;

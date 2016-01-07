@@ -32,8 +32,8 @@ class Searchable {
 			
 			foreach ( $q_fields as $q_field ) {
 				$qq = explode ( "=", $q_field );
-				$key = $qq [0];
-				$value = $qq [1];
+				$key = isset($qq [0]) ? $qq [0] : "";
+				$value = isset($qq [1]) ? $qq [1] : "";
 				
 				// validate key and value of one searchable argument
 				if (array_key_exists ( $key, $valid_fields ) && preg_match ( $valid_fields [$key], $value ) === 1) {
@@ -58,7 +58,7 @@ class Searchable {
 	 *        	this array contains ONLY REQUIRED fields (as values in array)
 	 *        	format of an array: array(string_field_name,string_field_name2)
 	 * @return array|false|null array in case of presence some valid fields
-	 *         false in case of missing some required field
+	 *         false in case of missing some required field or there is some invalid field
 	 *         null in case of empty query string
 	 */
 	public static function buildQueryBuilderWhereParams($q, $valid_fields = array(), $required_fields = array()) {
@@ -80,8 +80,8 @@ class Searchable {
 			
 			foreach ( $q_fields as $q_field ) {
 				$qq = explode ( "=", $q_field );
-				$field = $qq [0];
-				$value = $qq [1];
+				$field = isset($qq [0]) ? $qq [0] : "";
+				$value = isset($qq [1]) ? $qq [1] : "";
 				
 				// validate key and value of one searchable argument
 				if (array_key_exists ( $field, $valid_fields ) && preg_match ( $valid_fields [$field], $value ) === 1) {
@@ -92,6 +92,9 @@ class Searchable {
 					if (array_key_exists( $field, $rq )) {
 						$rq [$field] = true;
 					}
+				} else {
+					// invalid field or invalid field value
+					return false;
 				}
 			}
 			if (empty ( $r ["conditions"] ) && empty ( $r ["bindParams"] )) {
