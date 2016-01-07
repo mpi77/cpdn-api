@@ -3,6 +3,7 @@
 namespace CpdnAPI\Utils;
 
 class Expandable {
+	const URL_QUERY_PARAM = "e";
 	/**
 	 * Builds array based data for expandable feature from query part of URL.
 	 * This method is better to use with several expandable fields.

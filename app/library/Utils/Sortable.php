@@ -3,6 +3,7 @@
 namespace CpdnAPI\Utils;
 
 class Sortable {
+	const URL_QUERY_PARAM = "s";
 	const SORT_ASC = "asc";
 	const SORT_DESC = "desc";
 	

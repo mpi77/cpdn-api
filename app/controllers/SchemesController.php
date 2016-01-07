@@ -28,8 +28,8 @@ class SchemesController extends ControllerBase {
 		$this->response->setStatusCode ( 404, "Not Found" );
 	}
 	public function readCollectionAction() {
-		$page_size = ( int ) $this->request->get ( "pageSize", "int", Paginator::DEFAULT_PAGE_SIZE );
-		$page_number = ( int ) $this->request->get ( "pageNumber", "int", Paginator::DEFAULT_PAGE );
+		$page_size = ( int ) $this->request->get ( Paginator::URL_QUERY_PARAM_PAGE_SIZE, "int", Paginator::DEFAULT_PAGE_SIZE );
+		$page_number = ( int ) $this->request->get ( Paginator::URL_QUERY_PARAM_PAGE_NUMBER, "int", Paginator::DEFAULT_PAGE );
 		
 		switch ($this->dispatcher->getParam ( "version" )) {
 			case Common::API_VERSION_V1 :
@@ -37,12 +37,12 @@ class SchemesController extends ControllerBase {
 				$builder = $this->modelsManager->createBuilder ()->columns ( array_keys ( $this->validFields ) )->from ( 'CpdnAPI\Models\Network\Scheme' );
 				
 				// append WHERE conditions
-				if (($where = Searchable::buildQueryBuilderWhereParams ( $this->request->get ( "q" ), $this->validFields )) !== false) {
+				if (($where = Searchable::buildQueryBuilderWhereParams ( $this->request->get ( Searchable::URL_QUERY_PARAM ), $this->validFields )) !== false) {
 					$builder->where ( $where ["conditions"], $where ["bindParams"] );
 				}
 				
 				// append ORDER BY string
-				if (($order = Sortable::buildQueryBuilderOrderByParams ( $this->request->get ( "s" ), $this->validFields )) !== false) {
+				if (($order = Sortable::buildQueryBuilderOrderByParams ( $this->request->get ( Sortable::URL_QUERY_PARAM ), $this->validFields )) !== false) {
 					$builder->orderBy ( $order );
 				}
 				
@@ -56,7 +56,7 @@ class SchemesController extends ControllerBase {
 				
 				// expand & select result set
 				$items = array ();
-				$expandable = Expandable::buildExpandableFields ( $this->request->get ( "e" ), array (
+				$expandable = Expandable::buildExpandableFields ( $this->request->get ( Expandable::URL_QUERY_PARAM ), array (
 						"scheme" 
 				) );
 				foreach ( $page->items as $item ) {

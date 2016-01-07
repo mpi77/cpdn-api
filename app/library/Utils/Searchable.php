@@ -3,6 +3,7 @@
 namespace CpdnAPI\Utils;
 
 class Searchable {
+	const URL_QUERY_PARAM = "q";
 	/**
 	 * Builds searchable data for Criteria::fromInput() method from query part of URL.
 	 *
