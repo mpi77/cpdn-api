@@ -5,10 +5,6 @@ namespace CpdnAPI\Models\Network;
 use Phalcon\Mvc\Model;
 
 class Object extends Model {
-	public function initialize() {
-		$this->setConnectionService ( 'networkDb' );
-	}
-	
 	/**
 	 *
 	 * @var integer
@@ -44,10 +40,9 @@ class Object extends Model {
 	 */
 	public $tsUpdate;
 	
-	/**
-	 * Initializer method for model.
-	 */
 	public function initialize() {
+		$this->setConnectionService ( 'networkDb' );
+		
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\ObjectMember", "objectId", array (
 				'alias' => 'nObjectMember' 
 		) );

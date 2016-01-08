@@ -4,11 +4,7 @@ namespace CpdnAPI\Models\Network;
 
 use Phalcon\Mvc\Model;
 
-class Scheme extends Model {
-	public function initialize() {
-		$this->setConnectionService ( 'networkDb' );
-	}
-	
+class Scheme extends Model {	
 	/**
 	 *
 	 * @var integer
@@ -58,10 +54,9 @@ class Scheme extends Model {
 	 */
 	public $tsUpdate;
 	
-	/**
-	 * Initializer method for model.
-	 */
 	public function initialize() {
+		$this->setConnectionService ( 'networkDb' );
+		
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\Node", "schemeId", array (
 				'alias' => 'nNode'
 		) );

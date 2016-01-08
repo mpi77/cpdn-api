@@ -4,11 +4,7 @@ namespace CpdnAPI\Models\Network;
 
 use Phalcon\Mvc\Model;
 
-class Permission extends Model {
-	public function initialize() {
-		$this->setConnectionService ( 'networkDb' );
-	}
-	
+class Permission extends Model {	
 	/**
 	 *
 	 * @var integer
@@ -58,10 +54,9 @@ class Permission extends Model {
 	 */
 	public $tsUpdate;
 	
-	/**
-	 * Initializer method for model.
-	 */
 	public function initialize() {
+		$this->setConnectionService ( 'networkDb' );
+		
 		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
 				'alias' => 'scheme' 
 		) );

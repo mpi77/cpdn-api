@@ -5,10 +5,6 @@ namespace CpdnAPI\Models\Network;
 use Phalcon\Mvc\Model;
 
 class Path extends Model {
-	public function initialize() {
-		$this->setConnectionService ( 'networkDb' );
-	}
-	
 	/**
 	 *
 	 * @var integer
@@ -51,10 +47,9 @@ class Path extends Model {
 	 */
 	public $tsUpdate;
 	
-	/**
-	 * Initializer method for model.
-	 */
 	public function initialize() {
+		$this->setConnectionService ( 'networkDb' );
+		
 		$this->belongsTo ( "srcMapPointId", "CpdnAPI\Models\Network\MapPoint", "id", array (
 				'alias' => 'srcMapPoint'
 		) );

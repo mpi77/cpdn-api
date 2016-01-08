@@ -5,10 +5,6 @@ namespace CpdnAPI\Models\Network;
 use Phalcon\Mvc\Model;
 
 class Node extends Model {
-	public function initialize() {
-		$this->setConnectionService ( 'networkDb' );
-	}
-	
 	/**
 	 *
 	 * @var integer
@@ -58,10 +54,9 @@ class Node extends Model {
 	 */
 	public $tsUpdate;
 	
-	/**
-	 * Initializer method for model.
-	 */
 	public function initialize() {
+		$this->setConnectionService ( 'networkDb' );
+	
 		$this->belongsTo ( "mapPointId", "CpdnAPI\Models\Network\MapPoint", "id", array (
 				'alias' => 'mapPoint'
 		) );
@@ -74,12 +69,12 @@ class Node extends Model {
 		$this->belongsTo ( "nodeCalcId", "CpdnAPI\Models\Network\NodeCalc", "id", array (
 				'alias' => 'calc'
 		) );
-		
+	
 		$this->hasOne ( "id", "CpdnAPI\Models\Network\MapPoint", "nodeId", array (
 				'alias' => 'oMapPoint'
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\ObjectMember", "nodeId", array (
-				'alias' => 'nObjectMember' 
+				'alias' => 'nObjectMember'
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "nodeSrc", array (
 				'alias' => 'nNodeSrc'
@@ -91,7 +86,7 @@ class Node extends Model {
 				'alias' => 'nNodeTrc'
 		) );
 	}
-	
+		
 	public function beforeValidationOnCreate() {
 		$this->tsCreate = date ( "Y-m-d H:i:s" );
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );

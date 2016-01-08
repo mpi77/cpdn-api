@@ -5,10 +5,6 @@ namespace CpdnAPI\Models\Network;
 use Phalcon\Mvc\Model;
 
 class ObjectMember extends Model {
-	public function initialize() {
-		$this->setConnectionService ( 'networkDb' );
-	}
-	
 	/**
 	 *
 	 * @var integer
@@ -23,10 +19,9 @@ class ObjectMember extends Model {
 	 */
 	public $nodeId;
 	
-	/**
-	 * Initializer method for model.
-	 */
 	public function initialize() {
+		$this->setConnectionService ( 'networkDb' );
+		
 		$this->belongsTo ( "objectId", "CpdnAPI\Models\Network\Object", "id", array (
 				'alias' => 'object' 
 		) );

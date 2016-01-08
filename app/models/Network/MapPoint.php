@@ -5,9 +5,6 @@ namespace CpdnAPI\Models\Network;
 use Phalcon\Mvc\Model;
 
 class MapPoint extends Model {
-	public function initialize() {
-		$this->setConnectionService ( 'networkDb' );
-	}
 	
 	/**
 	 *
@@ -79,12 +76,11 @@ class MapPoint extends Model {
 	 */
 	public $tsUpdate;
 	
-	/**
-	 * Initializer method for model.
-	 */
 	public function initialize() {
+		$this->setConnectionService ( 'networkDb' );
+	
 		$this->belongsTo ( "nodeId", "CpdnAPI\Models\Network\Node", "id", array (
-				'alias' => 'node' 
+				'alias' => 'node'
 		) );
 		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
 				'alias' => 'scheme'

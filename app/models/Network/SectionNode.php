@@ -4,11 +4,7 @@ namespace CpdnAPI\Models\Network;
 
 use Phalcon\Mvc\Model;
 
-class SectionNode extends Model {
-	public function initialize() {
-		$this->setConnectionService ( 'networkDb' );
-	}
-	
+class SectionNode extends Model {	
 	/**
 	 *
 	 * @var integer
@@ -51,10 +47,9 @@ class SectionNode extends Model {
 	 */
 	public $tsUpdate;
 	
-	/**
-	 * Initializer method for model.
-	 */
 	public function initialize() {
+		$this->setConnectionService ( 'networkDb' );
+		
 		$this->hasOne ( "id", "CpdnAPI\Models\Network\Section", "sectionNodeId", array (
 				'alias' => 'section'
 		) );
