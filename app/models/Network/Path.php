@@ -51,6 +51,30 @@ class Path extends Model {
 	 */
 	public $tsUpdate;
 	
+	/**
+	 * Initializer method for model.
+	 */
+	public function initialize() {
+		$this->belongsTo ( "srcMapPointId", "CpdnAPI\Models\Network\MapPoint", "id", array (
+				'alias' => 'srcMapPoint'
+		) );
+		$this->belongsTo ( "dstMapPointId", "CpdnAPI\Models\Network\MapPoint", "id", array (
+				'alias' => 'dstMapPoint'
+		) );
+		$this->belongsTo ( "sectionId", "CpdnAPI\Models\Network\Section", "id", array (
+				'alias' => 'section'
+		) );
+	}
+	
+	public function beforeValidationOnCreate() {
+		$this->tsCreate = date ( "Y-m-d H:i:s" );
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
+	public function beforeValidationOnUpdate() {
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
 	public function columnMap() {
 		return array (
 				'id' => 'id',

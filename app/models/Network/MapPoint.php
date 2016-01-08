@@ -79,6 +79,36 @@ class MapPoint extends Model {
 	 */
 	public $tsUpdate;
 	
+	/**
+	 * Initializer method for model.
+	 */
+	public function initialize() {
+		$this->belongsTo ( "nodeId", "CpdnAPI\Models\Network\Node", "id", array (
+				'alias' => 'node' 
+		) );
+		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
+				'alias' => 'scheme'
+		) );
+		$this->hasOne ( "id", "CpdnAPI\Models\Network\Node", "mapPointId", array (
+				'alias' => 'oNode'
+		) );
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Path", "srcMapPointId", array (
+				'alias' => 'nSrcMapPointId'
+		) );
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Path", "dstMapPointId", array (
+				'alias' => 'nDstMapPointId'
+		) );
+	}
+	
+	public function beforeValidationOnCreate() {
+		$this->tsCreate = date ( "Y-m-d H:i:s" );
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
+	public function beforeValidationOnUpdate() {
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
 	public function columnMap() {
 		return array (
 				'id' => 'id',

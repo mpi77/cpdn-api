@@ -49,11 +49,20 @@ class Object extends Model {
 	 */
 	public function initialize() {
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\ObjectMember", "objectId", array (
-				'alias' => 'nobjectmembers' 
+				'alias' => 'nObjectMember' 
 		) );
 		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
 				'alias' => 'scheme' 
 		) );
+	}
+	
+	public function beforeValidationOnCreate() {
+		$this->tsCreate = date ( "Y-m-d H:i:s" );
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
+	public function beforeValidationOnUpdate() {
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
 	
 	public function columnMap() {

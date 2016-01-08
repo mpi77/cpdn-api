@@ -58,6 +58,24 @@ class Permission extends Model {
 	 */
 	public $tsUpdate;
 	
+	/**
+	 * Initializer method for model.
+	 */
+	public function initialize() {
+		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
+				'alias' => 'scheme' 
+		) );
+	}
+	
+	public function beforeValidationOnCreate() {
+		$this->tsCreate = date ( "Y-m-d H:i:s" );
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
+	public function beforeValidationOnUpdate() {
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
 	public function columnMap() {
 		return array (
 				'id' => 'id',

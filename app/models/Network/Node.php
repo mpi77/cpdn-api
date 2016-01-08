@@ -62,19 +62,9 @@ class Node extends Model {
 	 * Initializer method for model.
 	 */
 	public function initialize() {
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\ObjectMember", "node_id", array (
-				'alias' => 'nobjectmember' 
+		$this->belongsTo ( "mapPointId", "CpdnAPI\Models\Network\MapPoint", "id", array (
+				'alias' => 'mapPoint'
 		) );
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "node_src", array (
-				'alias' => 'nnodesrc'
-		) );
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "node_dst", array (
-				'alias' => 'nnodedst'
-		) );
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "node_trc", array (
-				'alias' => 'nnodetrc'
-		) );
-		
 		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
 				'alias' => 'scheme'
 		) );
@@ -84,6 +74,31 @@ class Node extends Model {
 		$this->belongsTo ( "nodeCalcId", "CpdnAPI\Models\Network\NodeCalc", "id", array (
 				'alias' => 'calc'
 		) );
+		
+		$this->hasOne ( "id", "CpdnAPI\Models\Network\MapPoint", "nodeId", array (
+				'alias' => 'oMapPoint'
+		) );
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\ObjectMember", "nodeId", array (
+				'alias' => 'nObjectMember' 
+		) );
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "nodeSrc", array (
+				'alias' => 'nNodeSrc'
+		) );
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "nodeDst", array (
+				'alias' => 'nNodeDst'
+		) );
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "nodeTrc", array (
+				'alias' => 'nNodeTrc'
+		) );
+	}
+	
+	public function beforeValidationOnCreate() {
+		$this->tsCreate = date ( "Y-m-d H:i:s" );
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
+	public function beforeValidationOnUpdate() {
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
 	
 	public function columnMap() {

@@ -132,9 +132,18 @@ class NodeSpec extends Model {
 	 * Initializer method for model.
 	 */
 	public function initialize() {
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\Node", "nodeSpecId", array (
-				'alias' => 'nnode' 
+		$this->hasOne ( "id", "CpdnAPI\Models\Network\Node", "nodeSpecId", array (
+				'alias' => 'node' 
 		) );
+	}
+	
+	public function beforeValidationOnCreate() {
+		$this->tsCreate = date ( "Y-m-d H:i:s" );
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
+	public function beforeValidationOnUpdate() {
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
 	
 	public function columnMap() {

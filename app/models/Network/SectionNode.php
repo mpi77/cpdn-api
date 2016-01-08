@@ -55,19 +55,28 @@ class SectionNode extends Model {
 	 * Initializer method for model.
 	 */
 	public function initialize() {
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\Section", "sectionNodeId", array (
-				'alias' => 'nsection'
+		$this->hasOne ( "id", "CpdnAPI\Models\Network\Section", "sectionNodeId", array (
+				'alias' => 'section'
 		) );
 		
 		$this->belongsTo ( "nodeSrc", "CpdnAPI\Models\Network\Node", "id", array (
-				'alias' => 'nodesrc'
+				'alias' => 'nodeSrc'
 		) );
 		$this->belongsTo ( "nodeDst", "CpdnAPI\Models\Network\Node", "id", array (
-				'alias' => 'nodedst'
+				'alias' => 'nodeDst'
 		) );
 		$this->belongsTo ( "nodeTrc", "CpdnAPI\Models\Network\Node", "id", array (
-				'alias' => 'nodetrc'
+				'alias' => 'nodeTrc'
 		) );
+	}
+	
+	public function beforeValidationOnCreate() {
+		$this->tsCreate = date ( "Y-m-d H:i:s" );
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
+	public function beforeValidationOnUpdate() {
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
 	
 	public function columnMap() {

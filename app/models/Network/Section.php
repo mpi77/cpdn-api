@@ -75,6 +75,19 @@ class Section extends Model {
 		$this->belongsTo ( "sectionNodeId", "CpdnAPI\Models\Network\SectionNode", "id", array (
 				'alias' => 'node'
 		) );
+		
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Path", "sectionId", array (
+				'alias' => 'nPath'
+		) );
+	}
+	
+	public function beforeValidationOnCreate() {
+		$this->tsCreate = date ( "Y-m-d H:i:s" );
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
+	}
+	
+	public function beforeValidationOnUpdate() {
+		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
 	
 	public function columnMap() {
