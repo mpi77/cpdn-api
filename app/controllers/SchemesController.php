@@ -5,6 +5,7 @@ namespace CpdnAPI\Controllers;
 use CpdnAPI\Models\Network\Scheme;
 use CpdnAPI\Utils\Common;
 use CpdnAPI\Utils\CollectionGenerator as CG;
+use CpdnAPI\Utils\ItemGenerator as IG;
 use CpdnAPI\Utils\MetaGenerator as MG;
 use CpdnAPI\Utils\Searchable;
 use CpdnAPI\Utils\Sortable;
@@ -68,7 +69,7 @@ class SchemesController extends ControllerBase {
 					if (in_array ( "scheme", $expandable )) {
 						// expanded scheme
 						$items [] = array (
-								MG::KEY_META => MG::generate ( sprintf ( "/schemes/%s", $item->id ), array (
+								MG::KEY_META => MG::generate ( sprintf ( "/%s/schemes/%s", Common::API_VERSION_V1, $item->id ), array (
 										MG::KEY_ID => $item->id,
 										"tsCreate" => $item->tsCreate,
 										"tsUpdate" => $item->tsUpdate 
@@ -81,7 +82,7 @@ class SchemesController extends ControllerBase {
 					} else {
 						// meta link to the current scheme
 						$items [] = array (
-								MG::KEY_META => MG::generate ( sprintf ( "/schemes/%s", $item->id ), array (
+								MG::KEY_META => MG::generate ( sprintf ( "/%s/schemes/%s", Common::API_VERSION_V1, $item->id ), array (
 										MG::KEY_ID => $item->id 
 								) ) 
 						);
@@ -106,6 +107,34 @@ class SchemesController extends ControllerBase {
 	public function createItemAction() {
 	}
 	public function readItemAction() {
+		switch ($this->dispatcher->getParam ( "version" )) {
+			case Common::API_VERSION_V1 :
+				$id = $this->dispatcher->getParam ( "id" );
+				
+				$scheme = Scheme::findFirst ( array (
+						"id = :id:",
+						"bind" => array (
+								"id" => $id 
+						) 
+				) );
+				
+				if ($scheme) {
+					$r = IG::generate ( $this->request->getURI (), array (
+							MG::KEY_ID => $scheme->id,
+							"tsCreate" => $scheme->tsCreate,
+							"tsUpdate" => $scheme->tsUpdate 
+					), array (
+							"name" => $scheme->name,
+							"description" => $scheme->description,
+							"lock" => $scheme->lock,
+							"version" => $scheme->version 
+					) );
+					$this->response->setStatusCode ( 200, "OK" );
+					$this->response->setJsonContent ( $r );
+				}
+				return $this->response;
+				break;
+		}
 	}
 	public function updateItemAction() {
 	}
