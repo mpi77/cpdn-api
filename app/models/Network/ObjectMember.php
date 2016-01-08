@@ -14,24 +14,31 @@ class ObjectMember extends Model {
 	 * @var integer
 	 *
 	 */
-	public $object_id;
+	public $objectId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $node_id;
+	public $nodeId;
 	
 	/**
 	 * Initializer method for model.
 	 */
 	public function initialize() {
-		$this->belongsTo ( "object_id", "CpdnAPI\Models\Network\Object", "id", array (
+		$this->belongsTo ( "objectId", "CpdnAPI\Models\Network\Object", "id", array (
 				'alias' => 'object' 
 		) );
-		$this->belongsTo ( "node_id", "CpdnAPI\Models\Network\Node", "id", array (
+		$this->belongsTo ( "nodeId", "CpdnAPI\Models\Network\Node", "id", array (
 				'alias' => 'node' 
 		) );
+	}
+	
+	public function columnMap() {
+		return array (
+				'object_id' => 'objectId',
+				'node_id' => 'nodeId'
+		);
 	}
 }

@@ -21,63 +21,77 @@ class NodeCalc extends Model {
 	 * @var string
 	 *
 	 */
-	public $load_active;
+	public $loadActive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $load_reactive;
+	public $loadReactive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_drop_kv;
+	public $voltageDropKv;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_drop_proc;
+	public $voltageDropProc;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_phase;
+	public $voltagePhase;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_value;
+	public $voltageValue;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
 	
 	/**
 	 * Initializer method for model.
 	 */
 	public function initialize() {
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\Node", "node_calc_id", array (
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Node", "nodeCalcId", array (
 				'alias' => 'nnode'
 		) );
+	}
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'load_active' => 'loadActive',
+				'load_reactive' => 'loadReactive',
+				'voltage_drop_kv' => 'voltageDropKv',
+				'voltage_drop_proc' => 'voltageDropProc',
+				'voltage_phase' => 'voltagePhase',
+				'voltage_value' => 'voltageValue',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
 	}
 }

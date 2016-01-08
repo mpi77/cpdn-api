@@ -21,59 +21,71 @@ class Section extends Model {
 	 * @var integer
 	 *
 	 */
-	public $section_calc_id;
+	public $sectionCalcId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $section_spec_id;
+	public $sectionSpecId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $section_node_id;
+	public $sectionNodeId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $scheme_id;
+	public $schemeId;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
 	
 	/**
 	 * Initializer method for model.
 	 */
 	public function initialize() {
 		
-		$this->belongsTo ( "scheme_id", "CpdnAPI\Models\Network\Scheme", "id", array (
+		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
 				'alias' => 'scheme'
 		) );
-		$this->belongsTo ( "section_spec_id", "CpdnAPI\Models\Network\SectionSpec", "id", array (
+		$this->belongsTo ( "sectionSpecId", "CpdnAPI\Models\Network\SectionSpec", "id", array (
 				'alias' => 'spec'
 		) );
-		$this->belongsTo ( "section_calc_id", "CpdnAPI\Models\Network\SectionCalc", "id", array (
+		$this->belongsTo ( "sectionCalcId", "CpdnAPI\Models\Network\SectionCalc", "id", array (
 				'alias' => 'calc'
 		) );
-		$this->belongsTo ( "section_node_id", "CpdnAPI\Models\Network\SectionNode", "id", array (
+		$this->belongsTo ( "sectionNodeId", "CpdnAPI\Models\Network\SectionNode", "id", array (
 				'alias' => 'node'
 		) );
+	}
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'section_calc_id' => 'sectionCalcId',
+				'section_spec_id' => 'sectionSpecId',
+				'section_node_id' => 'sectionNodeId',
+				'scheme_id' => 'schemeId',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
 	}
 }

@@ -21,105 +21,125 @@ class SectionCalc extends Model {
 	 * @var string
 	 *
 	 */
-	public $current_src_value;
+	public $currentSrcValue;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $current_src_phase;
+	public $currentSrcPhase;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $current_src_ratio;
+	public $currentSrcRatio;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $current_dst_value;
+	public $currentDstValue;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $current_dst_phase;
+	public $currentDstPhase;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $current_dst_ratio;
+	public $currentDstRatio;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_src_active;
+	public $powerSrcActive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_src_reactive;
+	public $powerSrcReactive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_dst_active;
+	public $powerDstActive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_dst_reactive;
+	public $powerDstReactive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $losses_active;
+	public $lossesActive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $losses_reactive;
+	public $lossesReactive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
 	
 	/**
 	 * Initializer method for model.
 	 */
 	public function initialize() {
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\Section", "section_calc_id", array (
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Section", "sectionCalcId", array (
 				'alias' => 'nsection'
 		) );
+	}
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'current_src_value' => 'currentSrcValue',
+				'current_src_phase' => 'currentSrcPhase',
+				'current_src_ratio' => 'currentSrcRatio',
+				'current_dst_value' => 'currentDstValue',
+				'current_dst_phase' => 'currentDstPhase',
+				'current_dst_ratio' => 'currentDstRatio',
+				'power_src_active' => 'powerSrcActive',
+				'power_src_reactive' => 'powerSrcReactive',
+				'power_dst_active' => 'powerDstActive',
+				'power_dst_reactive' => 'powerDstReactive',
+				'losses_active' => 'lossesActive',
+				'losses_reactive' => 'lossesReactive',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
 	}
 }

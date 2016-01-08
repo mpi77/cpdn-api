@@ -21,33 +21,44 @@ class Path extends Model {
 	 * @var integer
 	 *
 	 */
-	public $src_map_point_id;
+	public $srcMapPointId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $dst_map_point_id;
+	public $dstMapPointId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $section_id;
+	public $sectionId;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'src_map_point_id' => 'srcMapPointId',
+				'dst_map_point_id' => 'dstMapPointId',
+				'section_id' => 'sectionId',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
+	}
 }

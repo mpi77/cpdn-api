@@ -21,14 +21,14 @@ class MapPoint extends Model {
 	 * @var integer
 	 *
 	 */
-	public $scheme_id;
+	public $schemeId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $node_id;
+	public $nodeId;
 	
 	/**
 	 *
@@ -49,33 +49,48 @@ class MapPoint extends Model {
 	 * @var string
 	 *
 	 */
-	public $gps_latitude;
+	public $gpsLatitude;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $gps_longitude;
+	public $gpsLongitude;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $gps_altitude;
+	public $gpsAltitude;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'scheme_id' => 'schemeId',
+				'node_id' => 'nodeId',
+				'x' => 'x',
+				'y' => 'y',
+				'gps_latitude' => 'gpsLatitude',
+				'gps_longitude' => 'gpsLongitude',
+				'gps_altitude' => 'gpsAltitude',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
+	}
 }

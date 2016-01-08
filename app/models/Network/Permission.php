@@ -21,40 +21,52 @@ class Permission extends Model {
 	 * @var integer
 	 *
 	 */
-	public $scheme_id;
+	public $schemeId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $profile_id;
+	public $profileId;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_from;
+	public $tsFrom;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_to;
+	public $tsTo;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'scheme_id' => 'schemeId',
+				'profile_id' => 'profileId',
+				'ts_from' => 'tsFrom',
+				'ts_to' => 'tsTo',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
+	}
 }

@@ -21,42 +21,42 @@ class Node extends Model {
 	 * @var integer
 	 *
 	 */
-	public $node_calc_id;
+	public $nodeCalcId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $node_spec_id;
+	public $nodeSpecId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $scheme_id;
+	public $schemeId;
 	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
-	public $map_point_id;
+	public $mapPointId;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
 	
 	/**
 	 * Initializer method for model.
@@ -75,14 +75,26 @@ class Node extends Model {
 				'alias' => 'nnodetrc'
 		) );
 		
-		$this->belongsTo ( "scheme_id", "CpdnAPI\Models\Network\Scheme", "id", array (
+		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
 				'alias' => 'scheme'
 		) );
-		$this->belongsTo ( "node_spec_id", "CpdnAPI\Models\Network\NodeSpec", "id", array (
+		$this->belongsTo ( "nodeSpecId", "CpdnAPI\Models\Network\NodeSpec", "id", array (
 				'alias' => 'spec'
 		) );
-		$this->belongsTo ( "node_calc_id", "CpdnAPI\Models\Network\NodeCalc", "id", array (
+		$this->belongsTo ( "nodeCalcId", "CpdnAPI\Models\Network\NodeCalc", "id", array (
 				'alias' => 'calc'
 		) );
+	}
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'node_calc_id' => 'nodeCalcId',
+				'node_spec_id' => 'nodeSpecId',
+				'scheme_id' => 'schemeId',
+				'map_point_id' => 'mapPointId',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
 	}
 }

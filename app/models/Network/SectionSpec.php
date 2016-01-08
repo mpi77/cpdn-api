@@ -28,28 +28,28 @@ class SectionSpec extends Model {
 	 * @var string
 	 *
 	 */
-	public $resistance_value;
+	public $resistanceValue;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $resistance_ratio;
+	public $resistanceRatio;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $reactance_value;
+	public $reactanceValue;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $reactance_ratio;
+	public $reactanceRatio;
 	
 	/**
 	 *
@@ -70,147 +70,180 @@ class SectionSpec extends Model {
 	 * @var string
 	 *
 	 */
-	public $voltage_pri_actual;
+	public $voltagePriActual;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_pri_rated;
+	public $voltagePriRated;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_sec_actual;
+	public $voltageSecActual;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_sec_rated;
+	public $voltageSecRated;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_trc_actual;
+	public $voltageTrcActual;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_trc_rated;
+	public $voltageTrcRated;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_short_ab;
+	public $voltageShortAb;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_short_ac;
+	public $voltageShortAc;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_short_bc;
+	public $voltageShortBc;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $losses_short_ab;
+	public $lossesShortAb;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $losses_short_ac;
+	public $lossesShortAc;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $losses_short_bc;
+	public $lossesShortBc;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_rated_ab;
+	public $powerRatedAb;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_rated_ac;
+	public $powerRatedAc;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_rated_bc;
+	public $powerRatedBc;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $current_noload;
+	public $currentNoload;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $losses_noload;
+	public $lossesNoload;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $current_max;
+	public $currentMax;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
 	
 	/**
 	 * Initializer method for model.
 	 */
 	public function initialize() {
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\Section", "section_spec_id", array (
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Section", "sectionSpecId", array (
 				'alias' => 'nsection'
 		) );
+	}
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'status' => 'status',
+				'resistance_value' => 'resistanceValue',
+				'resistance_ratio' => 'resistanceRatio',
+				'reactance_value' => 'reactanceValue',
+				'reactance_ratio' => 'reactanceRatio',
+				'conductance' => 'conductance',
+				'susceptance' => 'susceptance',
+				'voltage_pri_actual' => 'voltagePriActual',
+				'voltage_pri_rated' => 'voltagePriRated',
+				'voltage_sec_actual' => 'voltageSecActual',
+				'voltage_sec_rated' => 'voltageSecRated',
+				'voltage_trc_actual' => 'voltageTrcActual',
+				'voltage_trc_rated' => 'voltageTrcRated',
+				'voltage_short_ab' => 'voltageShortAb',
+				'voltage_short_ac' => 'voltageShortAc',
+				'voltage_short_bc' => 'voltageShortBc',
+				'losses_short_ab' => 'lossesShortAb',
+				'losses_short_ac' => 'lossesShortAc',
+				'losses_short_bc' => 'lossesShortBc',
+				'power_rated_ab' => 'powerRatedAb',
+				'power_rated_ac' => 'powerRatedAc',
+				'power_rated_bc' => 'powerRatedBc',
+				'current_noload' => 'currentNoload',
+				'losses_noload' => 'lossesNoload',
+				'current_max' => 'currentMax',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
 	}
 }

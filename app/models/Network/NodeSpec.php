@@ -21,77 +21,77 @@ class NodeSpec extends Model {
 	 * @var string
 	 *
 	 */
-	public $power_installed;
+	public $powerInstalled;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_rated;
+	public $powerRated;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_rated;
+	public $voltageRated;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_level;
+	public $voltageLevel;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_value;
+	public $voltageValue;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $voltage_phase;
+	public $voltagePhase;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $cos_fi;
+	public $cosFi;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_active;
+	public $powerActive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $power_reactive;
+	public $powerReactive;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $reactance_transverse;
+	public $reactanceTransverse;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $reactance_longitudinal;
+	public $reactanceLongitudinal;
 	
 	/**
 	 *
@@ -105,35 +105,57 @@ class NodeSpec extends Model {
 	 * @var string
 	 *
 	 */
-	public $lambda_min;
+	public $lambdaMin;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $lambda_max;
+	public $lambdaMax;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
 	
 	/**
 	 * Initializer method for model.
 	 */
 	public function initialize() {
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\Node", "node_spec_id", array (
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\Node", "nodeSpecId", array (
 				'alias' => 'nnode' 
 		) );
+	}
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'power_installed' => 'powerInstalled',
+				'power_rated' => 'powerRated',
+				'voltage_rated' => 'voltageRated',
+				'voltage_level' => 'voltageLevel',
+				'voltage_value' => 'voltageValue',
+				'voltage_phase' => 'voltagePhase',
+				'cos_fi' => 'cosFi',
+				'power_active' => 'powerActive',
+				'power_reactive' => 'powerReactive',
+				'reactance_transverse' => 'reactanceTransverse',
+				'reactance_longitudinal' => 'reactanceLongitudinal',
+				'mi' => 'mi',
+				'lambda_min' => 'lambdaMin',
+				'lambda_max' => 'lambdaMax',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
 	}
 }

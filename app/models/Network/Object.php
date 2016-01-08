@@ -21,7 +21,7 @@ class Object extends Model {
 	 * @var integer
 	 *
 	 */
-	public $scheme_id;
+	public $schemeId;
 	
 	/**
 	 *
@@ -35,24 +35,34 @@ class Object extends Model {
 	 * @var string
 	 *
 	 */
-	public $ts_create;
+	public $tsCreate;
 	
 	/**
 	 *
 	 * @var string
 	 *
 	 */
-	public $ts_update;
+	public $tsUpdate;
 	
 	/**
 	 * Initializer method for model.
 	 */
 	public function initialize() {
-		$this->hasMany ( "id", "CpdnAPI\Models\Network\ObjectMember", "object_id", array (
+		$this->hasMany ( "id", "CpdnAPI\Models\Network\ObjectMember", "objectId", array (
 				'alias' => 'nobjectmembers' 
 		) );
-		$this->belongsTo ( "scheme_id", "CpdnAPI\Models\Network\Scheme", "id", array (
+		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
 				'alias' => 'scheme' 
 		) );
+	}
+	
+	public function columnMap() {
+		return array (
+				'id' => 'id',
+				'scheme_id' => 'schemeId',
+				'name' => 'name',
+				'ts_create' => 'tsCreate',
+				'ts_update' => 'tsUpdate'
+		);
 	}
 }
