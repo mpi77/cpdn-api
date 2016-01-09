@@ -159,8 +159,42 @@ class SchemesController extends ControllerBase {
 		}
 	}
 	public function updateItemAction() {
+		switch ($this->dispatcher->getParam ( "version" )) {
+			case Common::API_VERSION_V1 :
+				$id = $this->dispatcher->getParam ( "id" );
+				$scheme = Scheme::findFirst ( array (
+						"id = :id:",
+						"bind" => array (
+								"id" => $id
+						)
+				) );
+				
+				if ($scheme) {
+					$body = $this->request->getJsonRawBody();
+					if(preg_match ( $this->validFields ["name"], $body->name ) === 1 && preg_match ( $this->validFields ["description"], $body->description ) === 1 && preg_match ( $this->validFields ["version"], $body->version ) === 1 && preg_match ( $this->validFields ["lock"], $body->lock ) === 1){
+						$scheme->name = $body->name;
+						$scheme->description = $body->description;
+						$scheme->version = $body->version;
+						$scheme->lock = $body->lock;
+						if($scheme->save()){
+							$this->response->setStatusCode ( 200, "Ok" );
+						} else{
+							$this->response->setStatusCode ( 400, "Bad Request" );
+						}
+					} else{
+						$this->response->setStatusCode ( 400, "Bad Request" );
+					}
+				} else{
+					$this->response->setStatusCode ( 404, "Not Found" );
+				}
+		
+				return $this->response;
+				break;
+		}
 	}
 	public function deleteItemAction() {
+		$this->response->setStatusCode ( 501, "Not Implemented" );
+		return $this->response;
 	}
 	public function readNodesCollectionAction() {
 	}
