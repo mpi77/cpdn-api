@@ -7,6 +7,7 @@ use CpdnAPI\Utils\Common;
 use CpdnAPI\Utils\CollectionGenerator as CG;
 use CpdnAPI\Utils\ItemGenerator as IG;
 use CpdnAPI\Utils\MetaGenerator as MG;
+use CpdnAPI\Utils\StatusResponse as SR;
 use CpdnAPI\Utils\Searchable;
 use CpdnAPI\Utils\Sortable;
 use CpdnAPI\Utils\Expandable;
@@ -44,6 +45,7 @@ class SchemesController extends ControllerBase {
 				}
 				if ($where === false) {
 					$this->response->setStatusCode ( 400, "Bad Request" );
+					$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S400_MISSING_FIELD));
 					return $this->response;
 				}
 				
@@ -99,6 +101,7 @@ class SchemesController extends ControllerBase {
 					) ) );
 				} else {
 					$this->response->setStatusCode ( 204, "No Content" );
+					$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S204));
 				}
 				return $this->response;
 				break;
@@ -117,11 +120,14 @@ class SchemesController extends ControllerBase {
 					$new->lock = $body->lock;
 					if($new->save()){
 						$this->response->setStatusCode ( 201, "Created" );
+						$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S201, "", array("id" => $new->id)));
 					} else{
-						$this->response->setStatusCode ( 400, "Bad Request" );
+						$this->response->setStatusCode ( 500, "Internal Server Error" );
+						$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S500_CRUD_ERROR));
 					}
 				} else{
 					$this->response->setStatusCode ( 400, "Bad Request" );
+					$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S400_VALIDATION_FAILED));
 				}
 				
 				return $this->response;
@@ -153,6 +159,9 @@ class SchemesController extends ControllerBase {
 					) );
 					$this->response->setStatusCode ( 200, "OK" );
 					$this->response->setJsonContent ( $r );
+				} else{
+					$this->response->setStatusCode ( 404, "Not Found" );
+					$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S404));
 				}
 				return $this->response;
 				break;
@@ -177,15 +186,19 @@ class SchemesController extends ControllerBase {
 						$scheme->version = $body->version;
 						$scheme->lock = $body->lock;
 						if($scheme->save()){
-							$this->response->setStatusCode ( 200, "Ok" );
+							$this->response->setStatusCode ( 200, "OK" );
+							$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S200));
 						} else{
-							$this->response->setStatusCode ( 400, "Bad Request" );
+							$this->response->setStatusCode ( 500, "Internal Server Error" );
+							$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S500_CRUD_ERROR));
 						}
 					} else{
 						$this->response->setStatusCode ( 400, "Bad Request" );
+						$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S400_VALIDATION_FAILED));
 					}
 				} else{
 					$this->response->setStatusCode ( 404, "Not Found" );
+					$this->response->setJsonContent(SR::generate($this->request->getURI (), SR::S404));
 				}
 		
 				return $this->response;
