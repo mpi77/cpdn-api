@@ -105,6 +105,28 @@ class SchemesController extends ControllerBase {
 		}
 	}
 	public function createItemAction() {
+		switch ($this->dispatcher->getParam ( "version" )) {
+			case Common::API_VERSION_V1 :
+				$body = $this->request->getJsonRawBody();
+				
+				if(preg_match ( $this->validFields ["name"], $body->name ) === 1 && preg_match ( $this->validFields ["description"], $body->description ) === 1 && preg_match ( $this->validFields ["version"], $body->version ) === 1 && preg_match ( $this->validFields ["lock"], $body->lock ) === 1){
+					$new = new Scheme();
+					$new->name = $body->name;
+					$new->description = $body->description;
+					$new->version = $body->version;
+					$new->lock = $body->lock;
+					if($new->save()){
+						$this->response->setStatusCode ( 201, "Created" );
+					} else{
+						$this->response->setStatusCode ( 400, "Bad Request" );
+					}
+				} else{
+					$this->response->setStatusCode ( 400, "Bad Request" );
+				}
+				
+				return $this->response;
+				break;
+		}
 	}
 	public function readItemAction() {
 		switch ($this->dispatcher->getParam ( "version" )) {
