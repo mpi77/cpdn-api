@@ -210,15 +210,27 @@ class SchemesController extends ControllerBase {
 		return $this->response;
 	}
 	public function readNodesCollectionAction() {
+		$this->response->setStatusCode ( 501, "Not Implemented" );
+		return $this->response;
 	}
 	public function readSectionsCollectionAction() {
+		$this->response->setStatusCode ( 501, "Not Implemented" );
+		return $this->response;
 	}
 	public function readMapPointsCollectionAction() {
+		$this->response->setStatusCode ( 501, "Not Implemented" );
+		return $this->response;
 	}
 	public function readObjectsCollectionAction() {
+		$this->response->setStatusCode ( 501, "Not Implemented" );
+		return $this->response;
 	}
 	public function readPermissionsCollectionAction() {
+		$this->response->setStatusCode ( 501, "Not Implemented" );
+		return $this->response;
 	}
 	public function readTasksCollectionAction() {
+		$this->response->setStatusCode ( 501, "Not Implemented" );
+		return $this->response;
 	}
 }
