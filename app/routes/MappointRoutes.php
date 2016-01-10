@@ -5,10 +5,10 @@ namespace CpdnAPI\Routes;
 use CpdnAPI\Utils\Common;
 use Phalcon\Mvc\Router\Group as RouterGroup;
 
-class MapPointRoutes extends RouterGroup {
+class MappointRoutes extends RouterGroup {
 	public function initialize() {
 		$this->setPaths ( array (
-				'controller' => 'MapPoints',
+				'controller' => 'Mappoints',
 				'namespace' => 'CpdnAPI\Controllers' 
 		) );
 		

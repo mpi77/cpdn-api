@@ -4,7 +4,7 @@ namespace CpdnAPI\Controllers;
 
 use CpdnAPI\Utils\Common;
 
-class MapPointsController extends ControllerBase {
+class MappointsController extends ControllerBase {
 	public function initialize() {
 		$this->view->disable ();
 		$this->response->setContentType ( 'application/json', 'UTF-8' );

@@ -2,7 +2,7 @@
 use Phalcon\Mvc\Router;
 use CpdnAPI\Routes\ConfigRoutes;
 use CpdnAPI\Routes\ExecutorRoutes;
-use CpdnAPI\Routes\MapPointRoutes;
+use CpdnAPI\Routes\MappointRoutes;
 use CpdnAPI\Routes\NodeRoutes;
 use CpdnAPI\Routes\NotificationRoutes;
 use CpdnAPI\Routes\ObjectRoutes;
@@ -27,7 +27,7 @@ $router->add ( '/', array (
 /* private area */
 $router->mount ( new ConfigRoutes () );
 $router->mount ( new ExecutorRoutes () );
-$router->mount ( new MapPointRoutes () );
+$router->mount ( new MappointRoutes () );
 $router->mount ( new NodeRoutes () );
 $router->mount ( new NotificationRoutes () );
 $router->mount ( new ObjectRoutes () );
