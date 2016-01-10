@@ -54,7 +54,7 @@ class SchemeRoutes extends RouterGroup {
 		
 		/*
 		 * Delete scheme item.
-		 * Method: POST
+		 * Method: DELETE
 		 * URL: /{version}/schemes/{id}
 		 */
 		$this->addDelete ( '/{id:([a-zA-Z0-9]+)}/:params', array (
