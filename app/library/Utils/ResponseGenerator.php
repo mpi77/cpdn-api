@@ -4,7 +4,7 @@ namespace CpdnAPI\Utils;
 
 use CpdnAPI\Utils\MetaGenerator as MG;
 
-class StatusResponse {
+class ResponseGenerator {
 	const KEY_CODE = "code";
 	const KEY_DEV_MESSAGE = "devMessage";
 	const KEY_USR_MESSAGE = "usrMessage";
@@ -41,7 +41,7 @@ class StatusResponse {
 		return self::$codes[$code];
 	}
 	
-	public static function generate($queryUri, $code = 0, $devMessage = "", $args = array()) {
+	public static function generateContent($queryUri, $code = 0, $devMessage = "", $args = array()) {
 		$r = array ();
 		$r [MG::KEY_META] = MG::generate ( $queryUri );
 		$r [self::KEY_CODE] = $code;
