@@ -4,7 +4,7 @@ namespace CpdnAPI\Models\Network;
 
 use Phalcon\Mvc\Model;
 
-class Scheme extends Model {	
+class Scheme extends Model {
 	/**
 	 *
 	 * @var integer
@@ -53,36 +53,32 @@ class Scheme extends Model {
 	 *
 	 */
 	public $tsUpdate;
-	
 	public function initialize() {
 		$this->setConnectionService ( 'networkDb' );
 		
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\Node", "schemeId", array (
-				'alias' => 'nNode'
+				'alias' => 'nNode' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\Section", "schemeId", array (
-				'alias' => 'nSection'
+				'alias' => 'nSection' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\Object", "schemeId", array (
-				'alias' => 'nObject'
+				'alias' => 'nObject' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\MapPoint", "schemeId", array (
-				'alias' => 'nMapPoint'
+				'alias' => 'nMapPoint' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\Permission", "schemeId", array (
-				'alias' => 'nPermission'
+				'alias' => 'nPermission' 
 		) );
 	}
-	
 	public function beforeValidationOnCreate() {
 		$this->tsCreate = date ( "Y-m-d H:i:s" );
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function beforeValidationOnUpdate() {
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function columnMap() {
 		return array (
 				'id' => 'id',
@@ -92,6 +88,21 @@ class Scheme extends Model {
 				'lock' => 'lock',
 				'ts_create' => 'tsCreate',
 				'ts_update' => 'tsUpdate' 
+		);
+	}
+	
+	/**
+	 * Get scheme in defined output structure.
+	 *
+	 * @param Scheme $scheme        	
+	 * @return array
+	 */
+	public static function getScheme(Scheme $scheme) {
+		return array (
+				"name" => $scheme->name,
+				"description" => $scheme->description,
+				"lock" => $scheme->lock,
+				"version" => $scheme->version 
 		);
 	}
 }

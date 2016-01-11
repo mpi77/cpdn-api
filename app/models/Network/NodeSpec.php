@@ -123,7 +123,6 @@ class NodeSpec extends Model {
 	 *
 	 */
 	public $tsUpdate;
-	
 	public function initialize() {
 		$this->setConnectionService ( 'networkDb' );
 		
@@ -131,16 +130,13 @@ class NodeSpec extends Model {
 				'alias' => 'node' 
 		) );
 	}
-	
 	public function beforeValidationOnCreate() {
 		$this->tsCreate = date ( "Y-m-d H:i:s" );
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function beforeValidationOnUpdate() {
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function columnMap() {
 		return array (
 				'id' => 'id',
@@ -159,7 +155,40 @@ class NodeSpec extends Model {
 				'lambda_min' => 'lambdaMin',
 				'lambda_max' => 'lambdaMax',
 				'ts_create' => 'tsCreate',
-				'ts_update' => 'tsUpdate'
+				'ts_update' => 'tsUpdate' 
+		);
+	}
+	
+	/**
+	 * Get node spec in defined output structure.
+	 *
+	 * @param NodeSpec $calc        	
+	 * @return array
+	 */
+	public static function getSpec(NodeSpec $spec) {
+		return array (
+				"cosFi" => $spec->cosFi,
+				"mi" => $spec->mi,
+				"lambda" => array (
+						"max" => $spec->lambdaMax,
+						"min" => $spec->lambdaMin 
+				),
+				"power" => array (
+						"active" => $spec->powerActive,
+						"installed" => $spec->powerInstalled,
+						"rated" => $spec->powerRated,
+						"reactive" => $spec->powerReactive 
+				),
+				"reactance" => array (
+						"longitudinal" => $spec->reactanceLongitudinal,
+						"transverse" => $spec->reactanceTransverse
+				),
+				"voltage" => array (
+						"level" => $spec->voltageLevel,
+						"phase" => $spec->voltagePhase,
+						"rated" => $spec->voltageRated,
+						"value" => $spec->voltageValue 
+				) 
 		);
 	}
 }

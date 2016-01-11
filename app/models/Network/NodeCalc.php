@@ -4,7 +4,7 @@ namespace CpdnAPI\Models\Network;
 
 use Phalcon\Mvc\Model;
 
-class NodeCalc extends Model {	
+class NodeCalc extends Model {
 	/**
 	 *
 	 * @var integer
@@ -67,24 +67,20 @@ class NodeCalc extends Model {
 	 *
 	 */
 	public $tsUpdate;
-	
 	public function initialize() {
 		$this->setConnectionService ( 'networkDb' );
 		
 		$this->hasOne ( "id", "CpdnAPI\Models\Network\Node", "nodeCalcId", array (
-				'alias' => 'node'
+				'alias' => 'node' 
 		) );
 	}
-	
 	public function beforeValidationOnCreate() {
 		$this->tsCreate = date ( "Y-m-d H:i:s" );
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function beforeValidationOnUpdate() {
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function columnMap() {
 		return array (
 				'id' => 'id',
@@ -95,7 +91,28 @@ class NodeCalc extends Model {
 				'voltage_phase' => 'voltagePhase',
 				'voltage_value' => 'voltageValue',
 				'ts_create' => 'tsCreate',
-				'ts_update' => 'tsUpdate'
+				'ts_update' => 'tsUpdate' 
+		);
+	}
+	
+	/**
+	 * Get node calc in defined output structure.
+	 * 
+	 * @param NodeCalc $calc
+	 * @return array
+	 */
+	public static function getCalc(NodeCalc $calc) {
+		return array (
+				"load" => array (
+						"active" => $calc->loadActive,
+						"reactive" => $calc->loadReactive 
+				),
+				"voltage" => array (
+						"dropKv" => $calc->voltageDropKv,
+						"dropProc" => $calc->voltageDropProc,
+						"phase" => $calc->voltagePhase,
+						"value" => $calc->voltageValue 
+				) 
 		);
 	}
 }

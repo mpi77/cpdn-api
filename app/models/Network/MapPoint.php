@@ -119,4 +119,24 @@ class MapPoint extends Model {
 				'ts_update' => 'tsUpdate'
 		);
 	}
+	
+	/**
+	 * Get map point in defined output structure.
+	 *
+	 * @param MapPoint $point
+	 * @return array
+	 */
+	public static function getMapPoint(MapPoint $point) {
+		return array (
+				"gps" => array (
+						"altitude" => $point->gpsAltitude,
+						"latitude" => $point->gpsLatitude,
+						"longitude" => $point->gpsLongitude
+				),
+				"node" => null,
+				"scheme" => null,
+				"x" => $point->x,
+				"y" => $point->y
+		);
+	}
 }

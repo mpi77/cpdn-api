@@ -151,12 +151,7 @@ class SchemesController extends ControllerBase {
 							MG::KEY_ID => $scheme->id,
 							"tsCreate" => $scheme->tsCreate,
 							"tsUpdate" => $scheme->tsUpdate 
-					), array (
-							"name" => $scheme->name,
-							"description" => $scheme->description,
-							"lock" => $scheme->lock,
-							"version" => $scheme->version 
-					) );
+					), Scheme::getScheme($scheme) );
 					$this->response->setStatusCode ( 200, "OK" );
 					$this->response->setJsonContent ( $r );
 				} else{
