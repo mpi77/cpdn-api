@@ -42,5 +42,14 @@ class TaskRoutes extends RouterGroup {
 		$this->addGet ( '/{id:([a-zA-Z0-9]+)}/:params', array (
 				'action' => 'readItem' 
 		) );
+		
+		/*
+		 * Update task item.
+		 * Method: POST
+		 * URL: /{version}/tasks/{id}
+		 */
+		$this->addPost ( '/{id:([a-zA-Z0-9]+)}/:params', array (
+				'action' => 'updateItem'
+		) );
 	}
 }
