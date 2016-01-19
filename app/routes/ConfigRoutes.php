@@ -30,7 +30,7 @@ class ConfigRoutes extends RouterGroup {
 		 * Method: GET
 		 * URL: /{version}/configs/{app}/{id}
 		 */
-		$this->addGet ( '/{app:([a-zA-Z0-9]+)}/{id:([a-zA-Z0-9]+)}/:params', array (
+		$this->addGet ( '/{app:([a-zA-Z0-9]+)}/{key:([a-zA-Z0-9_\.\-]{1,45})}/:params', array (
 				'action' => 'readAppItem' 
 		) );
 	}
