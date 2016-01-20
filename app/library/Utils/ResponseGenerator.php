@@ -16,6 +16,8 @@ class ResponseGenerator {
 	const S400 = 400;
 	const S400_MISSING_FIELD = 4000;
 	const S400_VALIDATION_FAILED = 4001;
+	const S403 = 403;
+	const S403_MODE_RESTRICTION = 4030;
 	const S404 = 404;
 	const S500 = 500;
 	const S500_CRUD_ERROR = 5000;
@@ -28,6 +30,8 @@ class ResponseGenerator {
 			self::S400 => "[Bad Request]",
 			self::S400_MISSING_FIELD => "[Bad Request] Missing some required field or there is some invalid field in the request or in body.",
 			self::S400_VALIDATION_FAILED => "[Bad Request] Validation failed.",
+			self::S403 => "[Forbidden]",
+			self::S403_MODE_RESTRICTION => "[Forbidden] You have not enought permission or permission mode to access resource.",
 			self::S404 => "[Not Found]",
 			self::S500 => "[Internal Server Error]",
 			self::S500_CRUD_ERROR => "[Internal Server Error] Unable to create/read/update/delete data in storage."
