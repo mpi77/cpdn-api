@@ -5,12 +5,26 @@ namespace CpdnAPI\Models\Network;
 use Phalcon\Mvc\Model;
 
 class NodeSpec extends Model {
+	
+	const TYPE_POWER = "power";
+	const TYPE_CONSUMPTION = "consumption";
+	const TYPE_TURBO_GEN = "turbogen";
+	const TYPE_HYDRO_GEN = "hydrogen";
+	const TYPE_SUPERIOR_SYSTEM = "superiorSystem";
+	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
 	public $id;
+	
+	/**
+	 *
+	 * @var string
+	 *
+	 */
+	public $type;
 	
 	/**
 	 *
@@ -140,6 +154,7 @@ class NodeSpec extends Model {
 	public function columnMap() {
 		return array (
 				'id' => 'id',
+				'type' => 'type',
 				'power_installed' => 'powerInstalled',
 				'power_rated' => 'powerRated',
 				'voltage_rated' => 'voltageRated',
@@ -162,11 +177,12 @@ class NodeSpec extends Model {
 	/**
 	 * Get node spec in defined output structure.
 	 *
-	 * @param NodeSpec $calc        	
+	 * @param NodeSpec $spec        	
 	 * @return array
 	 */
 	public static function getSpec(NodeSpec $spec) {
 		return array (
+				"type" => $spec->type,
 				"cosFi" => $spec->cosFi,
 				"mi" => $spec->mi,
 				"lambda" => array (

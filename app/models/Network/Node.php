@@ -3,6 +3,8 @@
 namespace CpdnAPI\Models\Network;
 
 use Phalcon\Mvc\Model;
+use CpdnAPI\Utils\Common;
+use CpdnAPI\Utils\MetaGenerator as MG;
 
 class Node extends Model {
 	/**
@@ -53,49 +55,45 @@ class Node extends Model {
 	 *
 	 */
 	public $tsUpdate;
-	
 	public function initialize() {
 		$this->setConnectionService ( 'networkDb' );
-	
+		
 		$this->belongsTo ( "mapPointId", "CpdnAPI\Models\Network\MapPoint", "id", array (
-				'alias' => 'mapPoint'
+				'alias' => 'mapPoint' 
 		) );
 		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
-				'alias' => 'scheme'
+				'alias' => 'scheme' 
 		) );
 		$this->belongsTo ( "nodeSpecId", "CpdnAPI\Models\Network\NodeSpec", "id", array (
-				'alias' => 'spec'
+				'alias' => 'spec' 
 		) );
 		$this->belongsTo ( "nodeCalcId", "CpdnAPI\Models\Network\NodeCalc", "id", array (
-				'alias' => 'calc'
+				'alias' => 'calc' 
 		) );
-	
+		
 		$this->hasOne ( "id", "CpdnAPI\Models\Network\MapPoint", "nodeId", array (
-				'alias' => 'oMapPoint'
+				'alias' => 'oMapPoint' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\ObjectMember", "nodeId", array (
-				'alias' => 'nObjectMember'
+				'alias' => 'nObjectMember' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "nodeSrc", array (
-				'alias' => 'nNodeSrc'
+				'alias' => 'nNodeSrc' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "nodeDst", array (
-				'alias' => 'nNodeDst'
+				'alias' => 'nNodeDst' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\SectionNode", "nodeTrc", array (
-				'alias' => 'nNodeTrc'
+				'alias' => 'nNodeTrc' 
 		) );
 	}
-		
 	public function beforeValidationOnCreate() {
 		$this->tsCreate = date ( "Y-m-d H:i:s" );
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function beforeValidationOnUpdate() {
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function columnMap() {
 		return array (
 				'id' => 'id',
@@ -104,7 +102,38 @@ class Node extends Model {
 				'scheme_id' => 'schemeId',
 				'map_point_id' => 'mapPointId',
 				'ts_create' => 'tsCreate',
-				'ts_update' => 'tsUpdate'
+				'ts_update' => 'tsUpdate' 
+		);
+	}
+	
+	/**
+	 * Get node in defined output structure.
+	 *
+	 * @param Node $node        	
+	 * @return array
+	 */
+	public static function getNode(Node $node) {
+		return array (
+				"calc" => array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/nodes/%s/calc/", Common::API_VERSION_V1, $node->id ), array (
+								MG::KEY_ID => $node->id 
+						) ) 
+				),
+				"spec" => array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/nodes/%s/spec/", Common::API_VERSION_V1, $node->id ), array (
+								MG::KEY_ID => $node->id 
+						) ) 
+				),
+				"scheme" => array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/schemes/%s/", Common::API_VERSION_V1, $node->schemeId ), array (
+								MG::KEY_ID => $node->schemeId 
+						) ) 
+				),
+				"mapPoint" => array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/mapPoints/%s/", Common::API_VERSION_V1, $node->mapPointId ), array (
+								MG::KEY_ID => $node->mapPointId 
+						) ) 
+				) 
 		);
 	}
 }

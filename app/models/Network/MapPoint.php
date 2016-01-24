@@ -3,6 +3,8 @@
 namespace CpdnAPI\Models\Network;
 
 use Phalcon\Mvc\Model;
+use CpdnAPI\Utils\Common;
+use CpdnAPI\Utils\MetaGenerator as MG;
 
 class MapPoint extends Model {
 	
@@ -75,36 +77,32 @@ class MapPoint extends Model {
 	 *
 	 */
 	public $tsUpdate;
-	
 	public function initialize() {
 		$this->setConnectionService ( 'networkDb' );
-	
+		
 		$this->belongsTo ( "nodeId", "CpdnAPI\Models\Network\Node", "id", array (
-				'alias' => 'node'
+				'alias' => 'node' 
 		) );
 		$this->belongsTo ( "schemeId", "CpdnAPI\Models\Network\Scheme", "id", array (
-				'alias' => 'scheme'
+				'alias' => 'scheme' 
 		) );
 		$this->hasOne ( "id", "CpdnAPI\Models\Network\Node", "mapPointId", array (
-				'alias' => 'oNode'
+				'alias' => 'oNode' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\Path", "srcMapPointId", array (
-				'alias' => 'nSrcMapPointId'
+				'alias' => 'nSrcMapPointId' 
 		) );
 		$this->hasMany ( "id", "CpdnAPI\Models\Network\Path", "dstMapPointId", array (
-				'alias' => 'nDstMapPointId'
+				'alias' => 'nDstMapPointId' 
 		) );
 	}
-	
 	public function beforeValidationOnCreate() {
 		$this->tsCreate = date ( "Y-m-d H:i:s" );
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function beforeValidationOnUpdate() {
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function columnMap() {
 		return array (
 				'id' => 'id',
@@ -116,14 +114,14 @@ class MapPoint extends Model {
 				'gps_longitude' => 'gpsLongitude',
 				'gps_altitude' => 'gpsAltitude',
 				'ts_create' => 'tsCreate',
-				'ts_update' => 'tsUpdate'
+				'ts_update' => 'tsUpdate' 
 		);
 	}
 	
 	/**
 	 * Get map point in defined output structure.
 	 *
-	 * @param MapPoint $point
+	 * @param MapPoint $point        	
 	 * @return array
 	 */
 	public static function getMapPoint(MapPoint $point) {
@@ -131,12 +129,20 @@ class MapPoint extends Model {
 				"gps" => array (
 						"altitude" => $point->gpsAltitude,
 						"latitude" => $point->gpsLatitude,
-						"longitude" => $point->gpsLongitude
+						"longitude" => $point->gpsLongitude 
 				),
-				"node" => null,
-				"scheme" => null,
+				"node" => (empty ( $point->nodeId ) ? null : array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/nodes/%s/", Common::API_VERSION_V1, $point->nodeId ), array (
+								MG::KEY_ID => $point->nodeId 
+						) ) 
+				)),
+				"scheme" => array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/schemes/%s/", Common::API_VERSION_V1, $point->schemeId ), array (
+								MG::KEY_ID => $point->schemeId 
+						) ) 
+				),
 				"x" => $point->x,
-				"y" => $point->y
+				"y" => $point->y 
 		);
 	}
 }
