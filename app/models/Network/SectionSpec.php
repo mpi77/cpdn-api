@@ -5,12 +5,26 @@ namespace CpdnAPI\Models\Network;
 use Phalcon\Mvc\Model;
 
 class SectionSpec extends Model {
+	
+	const TYPE_LINE = "line";
+	const TYPE_TRANSFORMER = "transformer";
+	const TYPE_TRANSFORMER_W3 = "transformerW3";
+	const TYPE_REACTOR = "reactor";
+	const TYPE_SWITCH = "switch";
+	
 	/**
 	 *
 	 * @var integer
 	 *
 	 */
 	public $id;
+	
+	/**
+	 *
+	 * @var string
+	 *
+	 */
+	public $type;
 	
 	/**
 	 *
@@ -200,27 +214,24 @@ class SectionSpec extends Model {
 	 *
 	 */
 	public $tsUpdate;
-	
 	public function initialize() {
 		$this->setConnectionService ( 'networkDb' );
 		
 		$this->hasOne ( "id", "CpdnAPI\Models\Network\Section", "sectionSpecId", array (
-				'alias' => 'section'
+				'alias' => 'section' 
 		) );
 	}
-	
 	public function beforeValidationOnCreate() {
 		$this->tsCreate = date ( "Y-m-d H:i:s" );
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function beforeValidationOnUpdate() {
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function columnMap() {
 		return array (
 				'id' => 'id',
+				'type' => 'type',
 				'status' => 'status',
 				'resistance_value' => 'resistanceValue',
 				'resistance_ratio' => 'resistanceRatio',
@@ -247,7 +258,68 @@ class SectionSpec extends Model {
 				'losses_noload' => 'lossesNoload',
 				'current_max' => 'currentMax',
 				'ts_create' => 'tsCreate',
-				'ts_update' => 'tsUpdate'
+				'ts_update' => 'tsUpdate' 
+		);
+	}
+	
+	/**
+	 * Get section spec in defined output structure.
+	 *
+	 * @param SectionSpec $spec        	
+	 * @return array
+	 */
+	public static function getSpec(SectionSpec $spec) {
+		return array (
+				"type" => $spec->type,
+				"conductance" => $spec->conductance,
+				"status" => $spec->status,
+				"susceptance" => $spec->susceptance,
+				"current" => array (
+						"max" => $spec->currentMax,
+						"noLoad" => $spec->currentNoload 
+				),
+				"reactance" => array (
+						"ratio" => $spec->reactanceRatio,
+						"value" => $spec->reactanceValue 
+				),
+				"resistance" => array (
+						"ratio" => $spec->resistanceRatio,
+						"value" => $spec->resistanceValue 
+				),
+				"losses" => array (
+						"noLoad" => $spec->lossesNoload,
+						"short" => array (
+								"ab" => $spec->lossesShortAb,
+								"ac" => $spec->lossesShortAc,
+								"bc" => $spec->lossesShortBc 
+						) 
+				),
+				"power" => array (
+						"rated" => array (
+								"ab" => $spec->powerRatedAb,
+								"ac" => $spec->powerRatedAc,
+								"bc" => $spec->powerRatedBc 
+						) 
+				),
+				"voltage" => array (
+						"pri" => array (
+								"actual" => $spec->voltagePriActual,
+								"rated" => $spec->voltagePriRated 
+						),
+						"sec" => array (
+								"actual" => $spec->voltageSecActual,
+								"rated" => $spec->voltageSecRated 
+						),
+						"trc" => array (
+								"actual" => $spec->voltageTrcActual,
+								"rated" => $spec->voltageTrcRated 
+						),
+						"short" => array (
+								"ab" => $spec->voltageShortAb,
+								"ac" => $spec->voltageShortAc,
+								"bc" => $spec->voltageShortBc 
+						) 
+				) 
 		);
 	}
 }

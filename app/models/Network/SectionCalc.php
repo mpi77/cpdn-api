@@ -109,24 +109,20 @@ class SectionCalc extends Model {
 	 *
 	 */
 	public $tsUpdate;
-	
 	public function initialize() {
 		$this->setConnectionService ( 'networkDb' );
 		
 		$this->hasOne ( "id", "CpdnAPI\Models\Network\Section", "sectionCalcId", array (
-				'alias' => 'section'
+				'alias' => 'section' 
 		) );
 	}
-	
 	public function beforeValidationOnCreate() {
 		$this->tsCreate = date ( "Y-m-d H:i:s" );
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function beforeValidationOnUpdate() {
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function columnMap() {
 		return array (
 				'id' => 'id',
@@ -143,7 +139,44 @@ class SectionCalc extends Model {
 				'losses_active' => 'lossesActive',
 				'losses_reactive' => 'lossesReactive',
 				'ts_create' => 'tsCreate',
-				'ts_update' => 'tsUpdate'
+				'ts_update' => 'tsUpdate' 
+		);
+	}
+	
+	/**
+	 * Get section calc in defined output structure.
+	 *
+	 * @param SectionCalc $calc        	
+	 * @return array
+	 */
+	public static function getCalc(SectionCalc $calc) {
+		return array (
+				"current" => array (
+						"dst" => array (
+								"phase" => $calc->currentDstPhase,
+								"ratio" => $calc->currentDstRatio,
+								"value" => $calc->currentDstValue 
+						),
+						"src" => array (
+								"phase" => $calc->currentSrcPhase,
+								"ratio" => $calc->currentSrcRatio,
+								"value" => $calc->currentSrcValue 
+						) 
+				),
+				"losses" => array (
+						"active" => $calc->lossesActive,
+						"reactive" => $calc->lossesReactive 
+				),
+				"power" => array (
+						"dst" => array (
+								"active" => $calc->powerDstActive,
+								"reactive" => $calc->powerDstReactive 
+						),
+						"src" => array (
+								"active" => $calc->powerSrcActive,
+								"reactive" => $calc->powerSrcReactive 
+						) 
+				) 
 		);
 	}
 }

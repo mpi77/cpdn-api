@@ -3,8 +3,10 @@
 namespace CpdnAPI\Models\Network;
 
 use Phalcon\Mvc\Model;
+use CpdnAPI\Utils\Common;
+use CpdnAPI\Utils\MetaGenerator as MG;
 
-class SectionNode extends Model {	
+class SectionNode extends Model {
 	/**
 	 *
 	 * @var integer
@@ -46,34 +48,30 @@ class SectionNode extends Model {
 	 *
 	 */
 	public $tsUpdate;
-	
 	public function initialize() {
 		$this->setConnectionService ( 'networkDb' );
 		
 		$this->hasOne ( "id", "CpdnAPI\Models\Network\Section", "sectionNodeId", array (
-				'alias' => 'section'
+				'alias' => 'section' 
 		) );
 		
 		$this->belongsTo ( "nodeSrc", "CpdnAPI\Models\Network\Node", "id", array (
-				'alias' => 'nodeSrc'
+				'alias' => 'nodeSrc' 
 		) );
 		$this->belongsTo ( "nodeDst", "CpdnAPI\Models\Network\Node", "id", array (
-				'alias' => 'nodeDst'
+				'alias' => 'nodeDst' 
 		) );
 		$this->belongsTo ( "nodeTrc", "CpdnAPI\Models\Network\Node", "id", array (
-				'alias' => 'nodeTrc'
+				'alias' => 'nodeTrc' 
 		) );
 	}
-	
 	public function beforeValidationOnCreate() {
 		$this->tsCreate = date ( "Y-m-d H:i:s" );
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function beforeValidationOnUpdate() {
 		$this->tsUpdate = date ( "Y-m-d H:i:s" );
 	}
-	
 	public function columnMap() {
 		return array (
 				'id' => 'id',
@@ -81,7 +79,33 @@ class SectionNode extends Model {
 				'node_dst' => 'nodeDst',
 				'node_trc' => 'nodeTrc',
 				'ts_create' => 'tsCreate',
-				'ts_update' => 'tsUpdate'
+				'ts_update' => 'tsUpdate' 
+		);
+	}
+	
+	/**
+	 * Get section nodes in defined output structure.
+	 *
+	 * @param SectionNode $nodes        	
+	 * @return array
+	 */
+	public static function getNodes(SectionNode $nodes) {
+		return array (
+				"dst" => array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/nodes/%s/", Common::API_VERSION_V1, $nodes->nodeDst ), array (
+								MG::KEY_ID => $nodes->nodeDst 
+						) ) 
+				),
+				"src" => array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/nodes/%s/", Common::API_VERSION_V1, $nodes->nodeSrc ), array (
+								MG::KEY_ID => $nodes->nodeSrc 
+						) ) 
+				),
+				"trc" => (empty ( $nodes->nodeTrc ) ? null : array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/nodes/%s/", Common::API_VERSION_V1, $nodes->nodeTrc ), array (
+								MG::KEY_ID => $nodes->nodeTrc 
+						) ) 
+				)) 
 		);
 	}
 }
