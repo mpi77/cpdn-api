@@ -3,6 +3,8 @@
 namespace CpdnAPI\Models\Network;
 
 use Phalcon\Mvc\Model;
+use CpdnAPI\Utils\Common;
+use CpdnAPI\Utils\MetaGenerator as MG;
 
 class Path extends Model {
 	/**
@@ -78,6 +80,33 @@ class Path extends Model {
 				'section_id' => 'sectionId',
 				'ts_create' => 'tsCreate',
 				'ts_update' => 'tsUpdate'
+		);
+	}
+	
+	/**
+	 * Get path in defined output structure.
+	 *
+	 * @param Path $path
+	 * @return array
+	 */
+	public static function getPath(Path $path) {
+		return array (
+				"mapPoint" => array(
+						"dst" => array(
+								MG::KEY_META => MG::generate ( sprintf ( "/%s/mapPoints/%s/", Common::API_VERSION_V1, $path->dstMapPointId ), array (
+										MG::KEY_ID => $path->dstMapPointId
+						) )),
+						"src" => array(
+								MG::KEY_META => MG::generate ( sprintf ( "/%s/mapPoints/%s/", Common::API_VERSION_V1, $path->srcMapPointId ), array (
+										MG::KEY_ID => $path->srcMapPointId
+								) )
+						)
+				),
+				"section" => array (
+						MG::KEY_META => MG::generate ( sprintf ( "/%s/sections/%s/", Common::API_VERSION_V1, $path->sectionId ), array (
+								MG::KEY_ID => $path->sectionId
+						) )
+				)
 		);
 	}
 }
