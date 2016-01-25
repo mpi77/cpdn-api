@@ -16,12 +16,26 @@ return new \Phalcon\Config ( array (
 						'password' => 'cpdn',
 						'name' => 'cpdn-background',
 						'charset'  => 'utf8'),
+				"editor" => array(
+						'adapter' => 'Mysql',
+						'host' => 'localhost',
+						'username' => 'cpdn',
+						'password' => 'cpdn',
+						'name' => 'cpdn-editor',
+						'charset'  => 'utf8'),
 				"idp" => array(
 						'adapter' => 'Mysql',
 						'host' => 'localhost',
 						'username' => 'cpdn',
 						'password' => 'cpdn',
 						'name' => 'cpdn-idp',
+						'charset'  => 'utf8'),
+				"oauth" => array(
+						'adapter' => 'Mysql',
+						'host' => 'localhost',
+						'username' => 'cpdn',
+						'password' => 'cpdn',
+						'name' => 'cpdn-oauth',
 						'charset'  => 'utf8')
 		),
 		'application' => array (
