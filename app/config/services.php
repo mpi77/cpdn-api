@@ -11,6 +11,7 @@ use Phalcon\Events\Manager as EventsManager;
 use CpdnAPI\Plugins\NotFoundPlugin;
 use CpdnAPI\Mail\Mail;
 use CpdnAPI\Auth\Auth;
+use CpdnAPI\Acl\Acl;
 
 $di = new FactoryDefault ();
 
@@ -56,13 +57,33 @@ $di->set ( 'backgroundDb', function () use($config) {
 	) );
 } );
 
-$di->set ( 'idpDp', function () use($config) {
+$di->set ( 'idpDb', function () use($config) {
 	return new DbAdapter ( array (
 			'host' => $config->database->idp->host,
 			'username' => $config->database->idp->username,
 			'password' => $config->database->idp->password,
 			'dbname' => $config->database->idp->name,
 			'charset' => $config->database->idp->charset 
+	) );
+} );
+
+$di->set ( 'editorDb', function () use($config) {
+	return new DbAdapter ( array (
+			'host' => $config->database->editor->host,
+			'username' => $config->database->editor->username,
+			'password' => $config->database->editor->password,
+			'dbname' => $config->database->editor->name,
+			'charset' => $config->database->editor->charset 
+	) );
+} );
+
+$di->set ( 'oauthDb', function () use($config) {
+	return new DbAdapter ( array (
+			'host' => $config->database->oauth->host,
+			'username' => $config->database->oauth->username,
+			'password' => $config->database->oauth->password,
+			'dbname' => $config->database->oauth->name,
+			'charset' => $config->database->oauth->charset 
 	) );
 } );
 
@@ -96,5 +117,9 @@ $di->set ( 'mail', function () {
 
 $di->set ( 'auth', function () {
 	return new Auth ();
+} );
+
+$di->set ( 'acl', function () {
+	return new Acl ();
 } );
 	
