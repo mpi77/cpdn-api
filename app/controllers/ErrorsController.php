@@ -7,6 +7,10 @@ class ErrorsController extends ControllerBase {
 		$this->view->disable ();
 		$this->response->setContentType('application/json', 'UTF-8');
 	}
+	public function e403Action() {
+		$this->response->setStatusCode(403, "Forbidden");
+		return $this->response;
+	}
 	public function e404Action() {
 		$this->response->setStatusCode(404, "Not Found");
 		return $this->response;
