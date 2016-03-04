@@ -48,6 +48,7 @@ class NodesController extends ControllerBase {
 	private $validSpecFields = array (
 			"id" => Common::PATTERN_UNSIGNED_INTEGER_WITHOUT_ZERO,
 			"type" => "/^(power|consumption|turbogen|hydrogen|superiorSystem)$/",
+			"label" => "/^$|^([a-zA-Z0-9_\/\.\-]{1,255})$/",
 			"tsCreate" => Common::PATTERN_TIMESTAMP,
 			"tsUpdate" => Common::PATTERN_TIMESTAMP,
 			"cosFi" => Common::PATTERN_DOUBLE_OR_NULL,
@@ -203,6 +204,7 @@ class NodesController extends ControllerBase {
 						preg_match ( $this->validCalcFields ["voltagePhase"], $body->calc->voltage->phase ) === 1 &&
 						preg_match ( $this->validCalcFields ["voltageValue"], $body->calc->voltage->value ) === 1 &&
 						preg_match ( $this->validSpecFields ["type"], $body->spec->type ) === 1 &&
+						preg_match ( $this->validSpecFields ["label"], $body->spec->label ) === 1 &&
 						preg_match ( $this->validSpecFields ["cosFi"], $body->spec->cosFi ) === 1 &&
 						preg_match ( $this->validSpecFields ["mi"], $body->spec->mi ) === 1 &&
 						preg_match ( $this->validSpecFields ["lambdaMax"], $body->spec->lambda->max ) === 1 &&
@@ -258,6 +260,7 @@ class NodesController extends ControllerBase {
 							
 						$spec = new NodeSpec();
 						$spec->type = $body->spec->type;
+						$spec->label = $body->spec->label;
 						$spec->cosFi = $body->spec->cosFi;
 						$spec->mi = $body->spec->mi;
 						$spec->lambdaMax = $body->spec->lambda->max;
@@ -726,6 +729,7 @@ class NodesController extends ControllerBase {
 				$body = $this->request->getJsonRawBody();
 				$id = $this->dispatcher->getParam ( "id" );
 				if(		preg_match ( $this->validSpecFields ["type"], $body->type ) === 1 &&
+						preg_match ( $this->validSpecFields ["label"], $body->label ) === 1 &&
 						preg_match ( $this->validSpecFields ["cosFi"], $body->cosFi ) === 1 &&
 						preg_match ( $this->validSpecFields ["mi"], $body->mi ) === 1 &&
 						preg_match ( $this->validSpecFields ["lambdaMax"], $body->lambda->max ) === 1 &&
@@ -758,6 +762,7 @@ class NodesController extends ControllerBase {
 						
 						$spec = $node->spec;
 						$spec->type = $body->type;
+						$spec->label = $body->label;
 						$spec->cosFi = $body->cosFi;
 						$spec->mi = $body->mi;
 						$spec->lambdaMax = $body->lambda->max;

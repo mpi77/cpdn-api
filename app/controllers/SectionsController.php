@@ -58,6 +58,7 @@ class SectionsController extends ControllerBase {
 			"tsCreate" => Common::PATTERN_TIMESTAMP,
 			"tsUpdate" => Common::PATTERN_TIMESTAMP,
 			"status" => "/^$|^(on|off)$/",
+			"label" => "/^$|^([a-zA-Z0-9_\/\.\-]{1,255})$/",
 			"resistanceValue" => Common::PATTERN_DOUBLE_OR_NULL,
 			"resistanceRatio" => Common::PATTERN_DOUBLE_OR_NULL,
 			"reactanceValue" => Common::PATTERN_DOUBLE_OR_NULL,
@@ -237,6 +238,7 @@ class SectionsController extends ControllerBase {
 						preg_match ( $this->validCalcFields ["powerSrcReactive"], $body->calc->power->src->reactive ) === 1 &&
 						preg_match ( $this->validSpecFields ["type"], $body->spec->type ) === 1 &&
 						preg_match ( $this->validSpecFields ["status"], $body->spec->status ) === 1 &&
+						preg_match ( $this->validSpecFields ["label"], $body->spec->label ) === 1 &&
 						preg_match ( $this->validSpecFields ["resistanceValue"], $body->spec->resistance->value ) === 1 &&
 						preg_match ( $this->validSpecFields ["resistanceRatio"], $body->spec->resistance->ratio ) === 1 && 
 						preg_match ( $this->validSpecFields ["reactanceValue"], $body->spec->reactance->value ) === 1 &&
@@ -342,6 +344,7 @@ class SectionsController extends ControllerBase {
 						$spec = new SectionSpec();
 						$spec->type = $body->spec->type;
 						$spec->status = $body->spec->status;
+						$spec->label = $body->spec->label;
 						$spec->resistanceValue = $body->spec->resistance->value;
 						$spec->resistanceRatio = $body->spec->resistance->ratio;
 						$spec->reactanceValue = $body->spec->reactance->value;
@@ -847,6 +850,7 @@ class SectionsController extends ControllerBase {
 				$id = $this->dispatcher->getParam ( "id" );
 				if(		preg_match ( $this->validSpecFields ["type"], $body->type ) === 1 &&
 						preg_match ( $this->validSpecFields ["status"], $body->status ) === 1 &&
+						preg_match ( $this->validSpecFields ["label"], $body->label ) === 1 &&
 						preg_match ( $this->validSpecFields ["resistanceValue"], $body->resistance->value ) === 1 &&
 						preg_match ( $this->validSpecFields ["resistanceRatio"], $body->resistance->ratio ) === 1 && 
 						preg_match ( $this->validSpecFields ["reactanceValue"], $body->reactance->value ) === 1 &&
@@ -890,6 +894,7 @@ class SectionsController extends ControllerBase {
 						$spec = $section->spec;
 						$spec->type = $body->type;
 						$spec->status = $body->status;
+						$spec->label = $body->label;
 						$spec->resistanceValue = $body->resistance->value;
 						$spec->resistanceRatio = $body->resistance->ratio;
 						$spec->reactanceValue = $body->reactance->value;

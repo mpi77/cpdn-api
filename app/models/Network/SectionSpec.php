@@ -38,6 +38,13 @@ class SectionSpec extends Model {
 	 * @var string
 	 *
 	 */
+	public $label;
+	
+	/**
+	 *
+	 * @var string
+	 *
+	 */
 	public $resistanceValue;
 	
 	/**
@@ -233,6 +240,7 @@ class SectionSpec extends Model {
 				'id' => 'id',
 				'type' => 'type',
 				'status' => 'status',
+				'label' => 'label',
 				'resistance_value' => 'resistanceValue',
 				'resistance_ratio' => 'resistanceRatio',
 				'reactance_value' => 'reactanceValue',
@@ -271,6 +279,7 @@ class SectionSpec extends Model {
 	public static function getSpec(SectionSpec $spec) {
 		return array (
 				"type" => $spec->type,
+				"label" => $spec->label,
 				"conductance" => $spec->conductance,
 				"status" => $spec->status,
 				"susceptance" => $spec->susceptance,

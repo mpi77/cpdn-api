@@ -31,6 +31,13 @@ class NodeSpec extends Model {
 	 * @var string
 	 *
 	 */
+	public $label;
+	
+	/**
+	 *
+	 * @var string
+	 *
+	 */
 	public $powerInstalled;
 	
 	/**
@@ -155,6 +162,7 @@ class NodeSpec extends Model {
 		return array (
 				'id' => 'id',
 				'type' => 'type',
+				'label' => 'label',
 				'power_installed' => 'powerInstalled',
 				'power_rated' => 'powerRated',
 				'voltage_rated' => 'voltageRated',
@@ -183,6 +191,7 @@ class NodeSpec extends Model {
 	public static function getSpec(NodeSpec $spec) {
 		return array (
 				"type" => $spec->type,
+				"label" => $spec->label,
 				"cosFi" => $spec->cosFi,
 				"mi" => $spec->mi,
 				"lambda" => array (
