@@ -139,4 +139,33 @@ class UsersController extends ControllerBase {
 				break;
 		}
 	}
+	
+	public function myItemAction() {
+		switch ($this->dispatcher->getParam ( "version" )) {
+			case Common::API_VERSION_V1 :
+	
+				$profile = Profile::findFirst ( array (
+						"id = :id:",
+						"bind" => array (
+								"id" => $this->auth->getUserId()
+						)
+				) );
+	
+				if ($profile) {
+					$r = IG::generate ( sprintf ( "/%s/users/%s/", Common::API_VERSION_V1, $profile->id ), array (
+							MG::KEY_ID => $profile->id,
+							"tsCreate" => $profile->tsCreate,
+							"tsUpdate" => $profile->tsUpdate
+					), Profile::getProfile($profile) );
+						
+					$this->response->setStatusCode ( 200, "OK" );
+					$this->response->setJsonContent ( $r );
+				} else {
+					$this->response->setStatusCode ( 404, "Not Found" );
+					$this->response->setJsonContent ( RG::generateContent ( $this->request->getURI (), RG::S404 ) );
+				}
+				return $this->response;
+				break;
+		}
+	}
 }

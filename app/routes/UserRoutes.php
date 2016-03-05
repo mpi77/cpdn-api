@@ -33,5 +33,14 @@ class UserRoutes extends RouterGroup {
 		$this->addGet ( '/{id:([a-zA-Z0-9]+)}/:params', array (
 				'action' => 'readItem' 
 		) );
+		
+		/*
+		 * Read my user item.
+		 * Method: GET
+		 * URL: /{version}/users/my
+		 */
+		$this->addGet ( '/my/:params', array (
+				'action' => 'myItem'
+		) );
 	}
 }
