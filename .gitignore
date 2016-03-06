@@ -6,5 +6,6 @@
 /log
 /app/cache
 /app/cache/*
-/app/logs
 /app/logs/*
+/app/logs/*
+/vendor/*
